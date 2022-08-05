@@ -7,6 +7,10 @@ copyright: (c) 2020 Miro Adamy
 
 nav:
     - Home: index.md
+    - Notes: 
+        - 01: section-01.md
+        - 02: section-02.md
+        - 03: section-03.md
     - Demo:
         - Markdown: markdown-demo.md
         - Macros: macros-demo1.md
