@@ -1,0 +1,45 @@
+site_name: MkDocs Notes Template
+repo_url: https://github.com/example/repository/
+repo_name: SOME-NAME
+site_description: My Site description
+site_author: Miro Adamy
+copyright: (c) 2020 Miro Adamy
+
+nav:
+    - Home: index.md
+    - Demo:
+        - Markdown: markdown-demo.md
+        - Macros: macros-demo1.md
+theme: 
+    name: material
+
+markdown_extensions:
+    - admonition
+    - codehilite  
+    - footnotes
+    - meta
+    - toc:
+        permalink: True
+    - sane_lists
+    - pymdownx.arithmatex
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+    - pymdownx.superfences
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tabbed
+    - pymdownx.tilde
+    - pymdownx.magiclink
+
+plugins:
+    - search
+    - macros:
+        include_dir: .
+
+extra:
+    price: 12.50
+    company:
+        name: Acme
+        address: Laurinska 8
+        website: https://www.acme.com/    

@@ -1,0 +1,27 @@
+# List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - name: Dev
+    init: |
+      echo 'init script - runs' # runs during prebuild
+      pip install --upgrade pip
+      pip install mkdocs 'mkdocs-minify-plugin>=0.2' 
+      pip install 'mkdocs-git-revision-date-localized-plugin>=0.4' 'mkdocs-awesome-pages-plugin>=2.2.1' 'mkdocs-macros-plugin'
+      pip install mkdocs-material
+      gp sync-done pip-inst
+    command: |
+      echo Ready to develop
+      source .env
+
+  - name: Server
+    init: |
+      echo 'waiting init' && gp sync-await pip-inst
+    command: |
+      echo 'start script'
+      mkdocs serve
+      
+
+
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 3000
+    onOpen: open-preview

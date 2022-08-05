@@ -1,0 +1,19 @@
+image: python:3.8-buster
+
+before_script:
+  - pip install mkdocs 'mkdocs-minify-plugin>=0.2' 
+  - pip install 'mkdocs-git-revision-date-localized-plugin>=0.4' 'mkdocs-awesome-pages-plugin>=2.2.1' 'mkdocs-macros-plugin'
+
+  # Add your custom theme if not inside a theme_dir
+  # (https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes)
+  # - pip install mkdocs-material
+
+pages:
+  script:
+  - mkdocs build
+  - mv site public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
