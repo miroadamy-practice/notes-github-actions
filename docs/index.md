@@ -1,8 +1,13 @@
-# Welcome to MkDocs Template
+# Github Actions
+
+Notes from the course: `The Complete GitHub Actions & Workflows Guide` - https://www.udemy.com/course/github-actions/
+
+
+
+## Regarding MkDocs:
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
-## Commands
 
 * `mkdocs new [dir-name]` - Create a new project.
 * `mkdocs serve` - Start the live-reloading docs server.
