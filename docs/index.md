@@ -5,7 +5,7 @@ Notes from the course: `The Complete GitHub Actions & Workflows Guide` - https:/
 
 * <https://github.com/miroadamy-practice/github-actions-course>
 * <https://github.com/miroadamy-practice/github-actions-course-react>
-* This notes: <https://github.com/miroadamy-templates/notes-github-actions>
+* This notes: <https://github.com/miroadamy-practice/notes-github-actions>
 
 ## TOC:
 
