@@ -15,10 +15,11 @@ jobs:
       - name: python Command 
         run: |
           import platform 
-          print
-          (platform.processor())
+          print("Before")
+          print(platform.processor())
+          print(f"After")
         shell: python
-  run-windwos-commands:
+  run-windows-commands:
     runs-on: windows-latest
     needs: ["run-shell-command"]
     steps:
