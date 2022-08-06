@@ -199,3 +199,22 @@ jobs:
 Note that:
 
 * default shell == bash, supported on ALL
+* to run different platform => needs new job
+* jobs run in parallel by default, but we have `needs: ["run-shell-command"]` key
+
+
+## 01-6 Using a simple action
+
+See https://github.com/actions/hello-world-javascript-action
+
+It is used in 
+
+Example:
+
+```
+uses: actions/hello-world-javascript-action@main
+with:
+  who-to-greet: 'Mona the Octocat'
+```
+
+New workflow: 
