@@ -1,7 +1,12 @@
 # Section 01 - Intro
 
+## 01-1 Source
 
-## Basics
+Repositories with code: 
+
+* <https://github.com/miroadamy-practice/github-actions-course>
+* This notes: <https://github.com/miroadamy-practice/notes-github-actions>
+## 01-2 Basics
 
 * reacts to events on repository or to reposotory (push, pull-request-open, pull-request-merged. schedule, external event)
 * perform actions on events
@@ -44,7 +49,7 @@ Preinstalled software:
 * see [ubuntu-20.04](https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md)
 
 
-## YAML refresher
+## 01-3 YAML refresher
 
 Like JSON only pythonic. Key-value pairs
 
@@ -98,7 +103,7 @@ Useful extensions:
 * YAML - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml
 * Prettier - Code formatter - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 
-## First Workflow
+## 01-4 First Workflow
 
 See https://github.com/miroadamy-practice/github-actions-course
 
@@ -144,10 +149,53 @@ Can get notifications - see https://github.com/settings/notifications
 * Web
 * on all / failed
 
-While job is running - can be cancelled and retried.
+While job is running - can be cancelled and retried. You can re-run a workflow run, all failed jobs in a workflow run, or specific jobs in a workflow run up to 30 days after its initial run.
 
 Action UI has search, download archive, show timestamps (the ...)
 
-We can enable more information: session, secrets => 
+We can enable more information: session, secrets => `ACTIONS_RUNNER_DEBUG=true`, `ACTIONS_STEP_DEBUG=true`
+https://docs.github.com/en/actions/managing-workflow-runs#enabling-debug-logging
 
+## 01-5 Using different shells for each action
 
+Shell list: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+
+Repo - https://github.com/miroadamy-practice/github-actions-course/tree/using-different-shells-for-each-step, branch `using-different-shells-for-each-step`
+
+The workflow: https://github.com/miroadamy-practice/github-actions-course/blob/using-different-shells-for-each-step/.github/workflows/simple.yml
+
+```yaml
+name: Shell Commands 
+
+on: [push]
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: echo a string
+        run: echo "Hello World"
+      - name: multiline script 
+        run: |
+           node -v 
+           npm -v
+      - name: python Command 
+        run: |
+          import platform 
+          print
+          (platform.processor())
+        shell: python
+  run-windwos-commands:
+    runs-on: windows-latest
+    needs: ["run-shell-command"]
+    steps:
+      - name: Directory PowerShell
+        run: Get-Location 
+      - name: Directory Bash 
+        run: pwd 
+        shell: bash 
+```
+
+Note that:
+
+* default shell == bash, supported on ALL
