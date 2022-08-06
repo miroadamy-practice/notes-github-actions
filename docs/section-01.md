@@ -46,3 +46,87 @@ Preinstalled software:
 
 ## YAML refresher
 
+Like JSON only pythonic. Key-value pairs
+
+Values can be string with or without ", cannot contain ':'
+
+If value is object => indent with 2 or 4 spaces, TABS are not allowed
+
+We can use JSON style objects in YAML - only without "
+
+```
+key: {key: value, key2: val2}
+```
+
+Arrays: starts with dash
+
+```
+array:
+    - item1
+    - item2 
+    - item3isanObject:
+        key1: val1
+        key2: val2
+    - item4
+    - item5isanarray: [ one, two]
+---
+arrayOfObjects:
+    - item1key1: val1
+      item1key2: val2
+    - item2key1: val21
+      item2key2: val22
+```
+
+Continuation:
+
+```
+item1: val1
+longItem: >
+    all these lines
+    will be joined
+    together
+    into one
+nextItem: one
+item3: |
+    this will all be value of item3
+    but endoflines will be preserved
+```
+
+
+## First Workflow
+
+See https://github.com/miroadamy-practice/github-actions-course
+
+File `.github/workflows/simple.yml` - https://github.com/miroadamy-practice/github-actions-course/blob/lets-create-our-first-workflow/.github/workflows/simple.yml
+
+```yaml
+name: Shell Commands
+
+on: [push]
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: echo a string
+        run: echo "Hello World"
+      - name: multiline script 
+        run: |
+           node -v 
+           npm -v
+```
+
+Run it: push into branch - https://github.com/miroadamy-practice/github-actions-course/commit/145b4f542d594995356ccc2dcc1328db52ac3c35
+
+Fork disables workflows => enabled and push again
+
+
+
+
+https://github.com/miroadamy-practice/github-actions-course/actions
+
+https://github.com/miroadamy-practice/github-actions-course/runs/7703632123?check_suite_focus=true
+
+![](./img/first-1.png)
+
+![](./img/first-2.png)
