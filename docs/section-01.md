@@ -92,6 +92,11 @@ item3: |
     but endoflines will be preserved
 ```
 
+Useful extensions:
+
+* YAML to JSON - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=ahebrank.yaml2json
+* YAML - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml
+* Prettier - Code formatter - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 
 ## First Workflow
 
@@ -130,3 +135,19 @@ https://github.com/miroadamy-practice/github-actions-course/runs/7703632123?chec
 ![](./img/first-1.png)
 
 ![](./img/first-2.png)
+
+Settings for Actions: Settings - https://github.com/miroadamy-practice/github-actions-course/settings/actions
+
+Can get notifications - see https://github.com/settings/notifications
+
+* email
+* Web
+* on all / failed
+
+While job is running - can be cancelled and retried.
+
+Action UI has search, download archive, show timestamps (the ...)
+
+We can enable more information: session, secrets => 
+
+
