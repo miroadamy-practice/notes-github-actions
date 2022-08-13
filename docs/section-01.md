@@ -207,7 +207,8 @@ Note that:
 
 See https://github.com/actions/hello-world-javascript-action
 
-It is used in 
+It is used in https://github.com/miroadamy-practice/github-actions-course/blob/using-a-simple-action/.github/workflows/actions.yml
+(example of multiple workflows)
 
 Example:
 
@@ -217,4 +218,289 @@ with:
   who-to-greet: 'Mona the Octocat'
 ```
 
-New workflow: 
+Note `uses` instead of `run` + reference to an action.
+
+It can be local (`./ path`) or public repository - action/hello-world-javascript-action@main 
+
+After @ either branch or version or commit (SHA1). Best practice => use version. The @v1 => latest of v1, e.g. v1.2.5
+
+Actions are written in Javascript
+
+This action takes input. => `with` keyword
+
+Push triggered ALL workflow: simple.yml and action.yml => https://github.com/miroadamy-practice/github-actions-course/runs/7821324161?check_suite_focus=true
+
+The action output is VERY verbose => https://github.com/miroadamy-practice/github-actions-course/runs/7821324160?check_suite_focus=true
+
+```
+run-github-actions
+succeeded 10 minutes ago in 3s
+Search logs
+2s
+Current runner version: '2.294.0'
+Operating System
+  Ubuntu
+  20.04.4
+  LTS
+Virtual Environment
+  Environment: ubuntu-20.04
+  Version: 20220807.1
+  Included Software: https://github.com/actions/virtual-environments/blob/ubuntu20/20220807.1/images/linux/Ubuntu2004-Readme.md
+  Image Release: https://github.com/actions/virtual-environments/releases/tag/ubuntu20%2F20220807.1
+Virtual Environment Provisioner
+  1.0.0.0-main-20220805-2
+GITHUB_TOKEN Permissions
+  Actions: write
+  Checks: write
+  Contents: write
+  Deployments: write
+  Discussions: write
+  Issues: write
+  Metadata: read
+  Packages: write
+  Pages: write
+  PullRequests: write
+  RepositoryProjects: write
+  SecurityEvents: write
+  Statuses: write
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/hello-world-javascript-action@v1' (SHA:ae53f59fd519c0006ceb494ecbfed5f05d4151cf)
+0s
+Run actions/hello-world-javascript-action@v1
+Hello John!
+The event payload: {
+  "after": "ca7d641d2e1f301cd310c8479533bee910ea8d86",
+  "base_ref": null,
+  "before": "dc6a5e6c3bd2a0e401c2a88d2b270ca637a8b50e",
+  "commits": [
+    {
+      "author": {
+        "email": "miro.adamy@gmail.com",
+        "name": "Miro Adamy",
+        "username": "miroadamy"
+      },
+      "committer": {
+        "email": "miro.adamy@gmail.com",
+        "name": "Miro Adamy",
+        "username": "miroadamy"
+      },
+      "distinct": true,
+      "id": "ca7d641d2e1f301cd310c8479533bee910ea8d86",
+      "message": "Trigger push",
+      "timestamp": "2022-08-13T19:11:14Z",
+      "tree_id": "d90800085f5aec89a2966bbea7e43b1fa8540a72",
+      "url": "https://github.com/miroadamy-practice/github-actions-course/commit/ca7d641d2e1f301cd310c8479533bee910ea8d86"
+    }
+  ],
+  "compare": "https://github.com/miroadamy-practice/github-actions-course/compare/dc6a5e6c3bd2...ca7d641d2e1f",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "head_commit": {
+    "author": {
+      "email": "miro.adamy@gmail.com",
+      "name": "Miro Adamy",
+      "username": "miroadamy"
+    },
+    "committer": {
+      "email": "miro.adamy@gmail.com",
+      "name": "Miro Adamy",
+      "username": "miroadamy"
+    },
+    "distinct": true,
+    "id": "ca7d641d2e1f301cd310c8479533bee910ea8d86",
+    "message": "Trigger push",
+    "timestamp": "2022-08-13T19:11:14Z",
+    "tree_id": "d90800085f5aec89a2966bbea7e43b1fa8540a72",
+    "url": "https://github.com/miroadamy-practice/github-actions-course/commit/ca7d641d2e1f301cd310c8479533bee910ea8d86"
+  },
+  "organization": {
+    "avatar_url": "https://avatars.githubusercontent.com/u/96669309?v=4",
+    "description": null,
+    "events_url": "https://api.github.com/orgs/miroadamy-practice/events",
+    "hooks_url": "https://api.github.com/orgs/miroadamy-practice/hooks",
+    "id": 96669309,
+    "issues_url": "https://api.github.com/orgs/miroadamy-practice/issues",
+    "login": "miroadamy-practice",
+    "members_url": "https://api.github.com/orgs/miroadamy-practice/members{/member}",
+    "node_id": "O_kgDOBcMOfQ",
+    "public_members_url": "https://api.github.com/orgs/miroadamy-practice/public_members{/member}",
+    "repos_url": "https://api.github.com/orgs/miroadamy-practice/repos",
+    "url": "https://api.github.com/orgs/miroadamy-practice"
+  },
+  "pusher": {
+    "email": "miro.adamy@gmail.com",
+    "name": "miroadamy"
+  },
+  "ref": "refs/heads/using-a-simple-action",
+  "repository": {
+    "allow_forking": true,
+    "archive_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/{archive_format}{/ref}",
+    "archived": false,
+    "assignees_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/assignees{/user}",
+    "blobs_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/git/blobs{/sha}",
+    "branches_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/branches{/branch}",
+    "clone_url": "https://github.com/miroadamy-practice/github-actions-course.git",
+    "collaborators_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/collaborators{/collaborator}",
+    "comments_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/comments{/number}",
+    "commits_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/commits{/sha}",
+    "compare_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/compare/{base}...{head}",
+    "contents_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/contents/{+path}",
+    "contributors_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/contributors",
+    "created_at": 1659729820,
+    "default_branch": "master",
+    "deployments_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/deployments",
+    "description": null,
+    "disabled": false,
+    "downloads_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/downloads",
+    "events_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/events",
+    "fork": true,
+    "forks": 0,
+    "forks_count": 0,
+    "forks_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/forks",
+    "full_name": "miroadamy-practice/github-actions-course",
+    "git_commits_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/git/commits{/sha}",
+    "git_refs_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/git/refs{/sha}",
+    "git_tags_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/git/tags{/sha}",
+    "git_url": "git://github.com/miroadamy-practice/github-actions-course.git",
+    "has_downloads": true,
+    "has_issues": false,
+    "has_pages": false,
+    "has_projects": true,
+    "has_wiki": true,
+    "homepage": null,
+    "hooks_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/hooks",
+    "html_url": "https://github.com/miroadamy-practice/github-actions-course",
+    "id": 521762712,
+    "is_template": false,
+    "issue_comment_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/issues/comments{/number}",
+    "issue_events_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/issues/events{/number}",
+    "issues_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/issues{/number}",
+    "keys_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/keys{/key_id}",
+    "labels_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/labels{/name}",
+    "language": null,
+    "languages_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/languages",
+    "license": null,
+    "master_branch": "master",
+    "merges_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/merges",
+    "milestones_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/milestones{/number}",
+    "mirror_url": null,
+    "name": "github-actions-course",
+    "node_id": "R_kgDOHxl3mA",
+    "notifications_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/notifications{?since,all,participating}",
+    "open_issues": 0,
+    "open_issues_count": 0,
+    "organization": "miroadamy-practice",
+    "owner": {
+      "avatar_url": "https://avatars.githubusercontent.com/u/96669309?v=4",
+      "email": null,
+      "events_url": "https://api.github.com/users/miroadamy-practice/events{/privacy}",
+      "followers_url": "https://api.github.com/users/miroadamy-practice/followers",
+      "following_url": "https://api.github.com/users/miroadamy-practice/following{/other_user}",
+      "gists_url": "https://api.github.com/users/miroadamy-practice/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/miroadamy-practice",
+      "id": 96669309,
+      "login": "miroadamy-practice",
+      "name": "miroadamy-practice",
+      "node_id": "O_kgDOBcMOfQ",
+      "organizations_url": "https://api.github.com/users/miroadamy-practice/orgs",
+      "received_events_url": "https://api.github.com/users/miroadamy-practice/received_events",
+      "repos_url": "https://api.github.com/users/miroadamy-practice/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/miroadamy-practice/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/miroadamy-practice/subscriptions",
+      "type": "Organization",
+      "url": "https://api.github.com/users/miroadamy-practice"
+    },
+    "private": false,
+    "pulls_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/pulls{/number}",
+    "pushed_at": 1660417878,
+    "releases_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/releases{/id}",
+    "size": 22,
+    "ssh_url": "git@github.com:miroadamy-practice/github-actions-course.git",
+    "stargazers": 0,
+    "stargazers_count": 0,
+    "stargazers_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/stargazers",
+    "statuses_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/statuses/{sha}",
+    "subscribers_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/subscribers",
+    "subscription_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/subscription",
+    "svn_url": "https://github.com/miroadamy-practice/github-actions-course",
+    "tags_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/tags",
+    "teams_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/teams",
+    "topics": [],
+    "trees_url": "https://api.github.com/repos/miroadamy-practice/github-actions-course/git/trees{/sha}",
+    "updated_at": "2022-08-03T08:10:16Z",
+    "url": "https://github.com/miroadamy-practice/github-actions-course",
+    "visibility": "public",
+    "watchers": 0,
+    "watchers_count": 0,
+    "web_commit_signoff_required": false
+  },
+  "sender": {
+    "avatar_url": "https://avatars.githubusercontent.com/u/461826?v=4",
+    "events_url": "https://api.github.com/users/miroadamy/events{/privacy}",
+    "followers_url": "https://api.github.com/users/miroadamy/followers",
+    "following_url": "https://api.github.com/users/miroadamy/following{/other_user}",
+    "gists_url": "https://api.github.com/users/miroadamy/gists{/gist_id}",
+    "gravatar_id": "",
+    "html_url": "https://github.com/miroadamy",
+    "id": 461826,
+    "login": "miroadamy",
+    "node_id": "MDQ6VXNlcjQ2MTgyNg==",
+    "organizations_url": "https://api.github.com/users/miroadamy/orgs",
+    "received_events_url": "https://api.github.com/users/miroadamy/received_events",
+    "repos_url": "https://api.github.com/users/miroadamy/repos",
+    "site_admin": false,
+    "starred_url": "https://api.github.com/users/miroadamy/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/miroadamy/subscriptions",
+    "type": "User",
+    "url": "https://api.github.com/users/miroadamy"
+  }
+}
+0s
+Run echo "19:11:29 GMT+0000 (Coordinated Universal Time)"
+  echo "19:11:29 GMT+0000 (Coordinated Universal Time)"
+  shell: /usr/bin/bash -e {0}
+19:11:29 GMT+0000 (Coordinated Universal Time)
+0s
+Cleaning up orphan processes
+```
+
+![](./img/simple-action-1.png)
+
+The action can produce output - we add seconds step that refers the previous step named output. See `output` section of https://github.com/actions/hello-world-javascript-action 
+
+```
+{% raw %}
+ - name: Log Greeting Time
+        run: echo "${{ steps.greet.outputs.time }}"
+{% endraw %}
+```
+
+The action step needs id to be referred to.
+
+This is the action, btw:
+
+```js
+const core = require('@actions/core');
+const github = require('@actions/github');
+
+try {
+  // `who-to-greet` input defined in action metadata file
+  const nameToGreet = core.getInput('who-to-greet');
+  console.log(`Hello ${nameToGreet}!`);
+  const time = (new Date()).toTimeString();
+  core.setOutput("time", time);
+  // Get the JSON webhook payload for the event that triggered the workflow
+  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  console.log(`The event payload: ${payload}`);
+} catch (error) {
+  core.setFailed(error.message);
+}
+```
+
+It is actually action that logs all that. 
