@@ -1,12 +1,12 @@
 # Section 01 - Intro
 
-## 01-1 Source
+## 01-01 Source
 
 Repositories with code: 
 
 * <https://github.com/miroadamy-practice/github-actions-course>
 * This notes: <https://github.com/miroadamy-practice/notes-github-actions>
-## 01-2 Basics
+## 01-02 Basics
 
 * reacts to events on repository or to reposotory (push, pull-request-open, pull-request-merged. schedule, external event)
 * perform actions on events
@@ -49,7 +49,7 @@ Preinstalled software:
 * see [ubuntu-20.04](https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md)
 
 
-## 01-3 YAML refresher
+## 01-03 YAML refresher
 
 Like JSON only pythonic. Key-value pairs
 
@@ -103,7 +103,7 @@ Useful extensions:
 * YAML - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml
 * Prettier - Code formatter - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 
-## 01-4 First Workflow
+## 01-04 First Workflow
 
 See https://github.com/miroadamy-practice/github-actions-course
 
@@ -156,7 +156,7 @@ Action UI has search, download archive, show timestamps (the ...)
 We can enable more information: session, secrets => `ACTIONS_RUNNER_DEBUG=true`, `ACTIONS_STEP_DEBUG=true`
 https://docs.github.com/en/actions/managing-workflow-runs#enabling-debug-logging
 
-## 01-5 Using different shells for each action
+## 01-05 Using different shells for each action
 
 Shell list: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
 
@@ -203,7 +203,7 @@ Note that:
 * jobs run in parallel by default, but we have `needs: ["run-shell-command"]` key
 
 
-## 01-6 Using a simple action
+## 01-06 Using a simple action
 
 See https://github.com/actions/hello-world-javascript-action
 
@@ -505,7 +505,7 @@ try {
 
 It is actually action that logs all that. 
 
-## 01-7 The Checkout Action
+## 01-07 The Checkout Action
 
 Where does the code run ?
 
