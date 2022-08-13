@@ -504,3 +504,93 @@ try {
 ```
 
 It is actually action that logs all that. 
+
+## 01-7 The Checkout Action
+
+Where does the code run ?
+
+See `the-checkout-action` branch - https://github.com/miroadamy-practice/github-actions-course/blob/the-checkout-action/.github/workflows/actions.yml
+
+
+```
+{% raw %}
+jobs: 
+  run-github-actions: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Files 
+        run: |
+          pwd
+          ls -a
+          echo $GITHUB_SHA
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo "${{ github.token }}"
+          # git clone git@github:$GITHUB_REPOSITORY
+          # git checkout $GITHUB_SHA
+      - name: Checkout 
+        uses: actions/checkout@v1
+      - name: List Files After Checkout
+        run: |
+          pwd
+          ls -a
+      - name: Simple JS Action
+        id: greet 
+        uses: actions/hello-world-javascript-action@v1
+        with: 
+          who-to-greet: John
+      - name: Log Greeting Time
+        run: echo "${{ steps.greet.outputs.time }}"
+{% endraw %}
+```
+
+The results of the first: 
+
+```
+
+  pwd
+  ls -a
+  echo $GITHUB_SHA
+  echo $GITHUB_REPOSITORY
+  echo $GITHUB_WORKSPACE
+  echo "***" # this was github.token 
+  # git clone git@github:$GITHUB_REPOSITORY
+  # git checkout $GITHUB_SHA
+  shell: /usr/bin/bash -e {0}
+---
+/home/runner/work/github-actions-course/github-actions-course
+.
+..
+3a1ab11f8dc8a055ea9352d967d9707df100fdf5
+miroadamy-practice/github-actions-course
+/home/runner/work/github-actions-course/github-actions-course
+***
+
+```
+
+Note that the workspace is empty. By default workflow does NOT clone
+
+=> action `actions/checkout` => https://github.com/actions/checkout, https://github.com/marketplace/actions/checkout@v1
+
+Files after checkout:
+
+```
+  pwd
+  ls -a
+  shell: /usr/bin/bash -e {0}
+---
+/home/runner/work/github-actions-course/github-actions-course
+.
+..
+.git
+.github
+README.md
+test.yml
+```
+
+ENV Variables set automatically:
+
+* $GITHUB_SHA => the commit id that triggered
+* $GITHUB_REPOSITORY
+* $GITHUB_REPOSITORY
+* github.token => does not display
