@@ -9,7 +9,7 @@ nav:
     - Home: index.md
     - Notes: 
         - 01 - Intro: section-01.md
-        - 02: section-02.md
+        - 02 - Events, Schedulers, Filters: section-02.md
         - 03: section-03.md
     - Demo:
         - Markdown: markdown-demo.md

@@ -1,5 +1,7 @@
 # Section 02 - Events, Schedulers, Filters
 
+## 02-09 Events
+
 Events, Schedules, External Events & Filters that can Trigger a Workflow Run
 
 Any type of event can trigger: <https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows>
@@ -96,7 +98,7 @@ The Simple JS action shows payload dependent on the trigger:
 * comment - <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7825805192?check_suite_focus=true#step:5:7>
 * release - triggered 3x, created, published, released
 
-## 02-09 Scheduled triggers
+## 02-10 Scheduled triggers
 
 * <https://crontab.guru/>
 * <https://crontab.guru/examples.html>
@@ -154,8 +156,8 @@ Also:
 * Days of week ==> 0 = Sunday, 6 = Saturday, can use SUN, MON
 * sched must be on main branch
 
-## 02-10
+## 02-11 Manual triggers
 
-## 02-11
+
 
 ## 02-12

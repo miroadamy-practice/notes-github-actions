@@ -13,7 +13,7 @@ Notes from the course: `The Complete GitHub Actions & Workflows Guide` - https:/
 
 In section 1 we will have a quick conceptual introduction to what workflows, actions, jobs, steps and other terms that we will see are. We will also learn about YAML which is the format used to write workflows in GitHub. Then we will start writing our workflow and take a look at basic things like writing commands, using different shells and using actions including the most common action which is the checkout action.
 
-### [Section-2 - ](./section-02.md)
+### [Section-2 - Events, Schedulers, Filters](./section-02.md)
 
 
 In section 2 we will get a bit deeper and learn different ways that we can use in order to trigger a workflow to run. This includes GitHub events like push and pull_request, cron schedules and also external events. We will also see how to make a workflow only run for certain branches, tags and directory paths.
