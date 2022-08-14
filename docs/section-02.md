@@ -207,7 +207,7 @@ Use Rest Client - rest.http
 ## Trigger workflow
 POST https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/dispatches
 Content-Type:  application/vnd.github+json" \ 
-Authorization: token ghp_xxxxxxxxxxxx
+Authorization: token {{ghtoken}}
 
 {"event_type":"on_demand_test","client_payload":{"unit":false,"integration":true}}
 
@@ -220,6 +220,8 @@ The event payload: {
     "unit": false
   },
 ```
+
+The tokens are defined in the `.vscode/settings.json`
 
 ## 02-12
 
