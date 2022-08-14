@@ -147,6 +147,14 @@ Changed to '*/15' and '0/20' to let run over period of time
 
 It can be coincidence - GH is slow
 
+Update - 2 hours later:
+
+It seems to have restarted on its own:
+
+![runs-2](./img/sched-runs-2.png)
+
+Will disabling the schedule soon
+
 ### More on Schedule
 
 Also:
@@ -158,6 +166,61 @@ Also:
 
 ## 02-11 Manual triggers
 
+Event `repository_dispatch`
 
+POST request - see <https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event>
+
+```sh
+curl \
+  -X POST \
+  -H "Accept: application/vnd.github+json" \ 
+  -H "Authorization: token $GH_TOKEN" \
+  https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/dispatches \
+  -d '{"event_type":"on-demand-test","client_payload":{"unit":false,"integration":true}}'
+```
+
+```js
+// Octokit.js
+// https://github.com/octokit/core.js#readme
+const octokit = new Octokit({
+  auth: 'personal-access-token123'
+})
+
+await octokit.request('POST /repos/{owner}/{repo}/dispatches', {
+  owner: 'OWNER',
+  repo: 'REPO',
+  event_type: 'on-demand-test',
+  client_payload: {
+    unit: false,
+    integration: true
+  }
+})
+```
+
+if we specify type, we need to match the type in the event type
+
+Need to generate new token, should be enough to generate repo scope
+
+Use Rest Client - rest.http
+
+```json
+## Trigger workflow
+POST https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/dispatches
+Content-Type:  application/vnd.github+json" \ 
+Authorization: token ghp_xxxxxxxxxxxx
+
+{"event_type":"on_demand_test","client_payload":{"unit":false,"integration":true}}
+
+---
+The event payload: {
+  "action": "on_demand_test",
+  "branch": "main",
+  "client_payload": {
+    "integration": true,
+    "unit": false
+  },
+```
 
 ## 02-12
+
+zz
