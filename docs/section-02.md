@@ -96,7 +96,63 @@ The Simple JS action shows payload dependent on the trigger:
 * comment - <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7825805192?check_suite_focus=true#step:5:7>
 * release - triggered 3x, created, published, released
 
-## 02-09
+## 02-09 Scheduled triggers
+
+* <https://crontab.guru/>
+* <https://crontab.guru/examples.html>
+
+Example is here: <https://github.com/miroadamy-practice/github-actions-course/blob/setting-a-schedule-to-trigger-workflows/.github/workflows/actions.yml>
+
+```yaml
+on:
+  schedule:
+    - cron: "0/5 * * * *"
+    - cron: "0/6 * * * *" 
+```
+
+Schedule is array of cron expression3:
+
+`MINUTE HOUR DAY-OF-MONTH MONTH DAY-OF-WEEK`
+
+NOTE: The above - `"0/5 * * * *"` never triggered (used without quotes)
+
+I changed it to `"*/5 * * * *"`
+
+Scheduled event payload is very small:
+
+```json
+The event payload: {
+  "schedule": "0/5 * * * *"
+}
+```
+
+Changed back to `"0/5 * * * *"` => never runs
+
+Changed to `"*/5 * * * *"` to check:
+
+See also:
+    * <https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#scheduled-events>
+
+### Issues with Cron
+
+This can be coincidence, but:
+
+![actions](./img/sched-runs-1.png)
+
+![commits](./img/sched-commits.png)
+
+Changed to '*/15' and '0/20' to let run over period of time
+
+It can be coincidence - GH is slow
+
+### More on Schedule
+
+Also:
+
+* All times in schedule are UTC times
+* We can use JAN, FEB instead of month number
+* Days of week ==> 0 = Sunday, 6 = Saturday, can use SUN, MON
+* sched must be on main branch
 
 ## 02-10
 
