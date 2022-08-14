@@ -2,10 +2,11 @@
 
 ## 01-01 Source
 
-Repositories with code: 
+Repositories with code:
 
 * <https://github.com/miroadamy-practice/github-actions-course>
 * This notes: <https://github.com/miroadamy-practice/notes-github-actions>
+
 ## 01-02 Basics
 
 * reacts to events on repository or to reposotory (push, pull-request-open, pull-request-merged. schedule, external event)
@@ -27,7 +28,7 @@ Runner - any machine with GH App runner installed. It runs your jobs. It can be 
 
 Types:
 
-* ubuntu-latest or ubuntu-20.04, ubuntu-18.04, macos-12, macos-11 or macos-lastest, macos-10.15, windows-2019, windows-2022 or windows-latest 
+* ubuntu-latest or ubuntu-20.04, ubuntu-18.04, macos-12, macos-11 or macos-lastest, macos-10.15, windows-2019, windows-2022 or windows-latest
 
 **Hardware specification for Windows and Linux virtual machines:**
 
@@ -48,7 +49,6 @@ Preinstalled software:
 * Android SDK and XCode
 * see [ubuntu-20.04](https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md)
 
-
 ## 01-03 YAML refresher
 
 Like JSON only pythonic. Key-value pairs
@@ -59,13 +59,13 @@ If value is object => indent with 2 or 4 spaces, TABS are not allowed
 
 We can use JSON style objects in YAML - only without "
 
-```
+```yaml
 key: {key: value, key2: val2}
 ```
 
 Arrays: starts with dash
 
-```
+```yaml
 array:
     - item1
     - item2 
@@ -84,7 +84,7 @@ arrayOfObjects:
 
 Continuation:
 
-```
+```yaml
 item1: val1
 longItem: >
     all these lines
@@ -99,15 +99,15 @@ item3: |
 
 Useful extensions:
 
-* YAML to JSON - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=ahebrank.yaml2json
-* YAML - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml
-* Prettier - Code formatter - Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+* YAML to JSON - Visual Studio Marketplace: <https://marketplace.visualstudio.com/items?itemName=ahebrank.yaml2json>
+* YAML - Visual Studio Marketplace: <https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml>
+* Prettier - Code formatter - Visual Studio Marketplace: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
 
 ## 01-04 First Workflow
 
-See https://github.com/miroadamy-practice/github-actions-course
+See <https://github.com/miroadamy-practice/github-actions-course>
 
-File `.github/workflows/simple.yml` - https://github.com/miroadamy-practice/github-actions-course/blob/lets-create-our-first-workflow/.github/workflows/simple.yml
+File `.github/workflows/simple.yml` - <https://github.com/miroadamy-practice/github-actions-course/blob/lets-create-our-first-workflow/.github/workflows/simple.yml>
 
 ```yaml
 name: Shell Commands
@@ -126,24 +126,21 @@ jobs:
            npm -v
 ```
 
-Run it: push into branch - https://github.com/miroadamy-practice/github-actions-course/commit/145b4f542d594995356ccc2dcc1328db52ac3c35
+Run it: push into branch - <https://github.com/miroadamy-practice/github-actions-course/commit/145b4f542d594995356ccc2dcc1328db52ac3c35>
 
 Fork disables workflows => enabled and push again
 
+<https://github.com/miroadamy-practice/github-actions-course/actions>
 
+<https://github.com/miroadamy-practice/github-actions-course/runs/7703632123?check_suite_focus=true>
 
+![first-1](./img/first-1.png)
 
-https://github.com/miroadamy-practice/github-actions-course/actions
+![first-2](./img/first-2.png)
 
-https://github.com/miroadamy-practice/github-actions-course/runs/7703632123?check_suite_focus=true
+Settings for Actions: Settings - <https://github.com/miroadamy-practice/github-actions-course/settings/actions>
 
-![](./img/first-1.png)
-
-![](./img/first-2.png)
-
-Settings for Actions: Settings - https://github.com/miroadamy-practice/github-actions-course/settings/actions
-
-Can get notifications - see https://github.com/settings/notifications
+Can get notifications - see <https://github.com/settings/notifications>
 
 * email
 * Web
@@ -154,15 +151,15 @@ While job is running - can be cancelled and retried. You can re-run a workflow r
 Action UI has search, download archive, show timestamps (the ...)
 
 We can enable more information: session, secrets => `ACTIONS_RUNNER_DEBUG=true`, `ACTIONS_STEP_DEBUG=true`
-https://docs.github.com/en/actions/managing-workflow-runs#enabling-debug-logging
+<https://docs.github.com/en/actions/managing-workflow-runs#enabling-debug-logging>
 
 ## 01-05 Using different shells for each action
 
-Shell list: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+Shell list: <https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell>
 
-Repo - https://github.com/miroadamy-practice/github-actions-course/tree/using-different-shells-for-each-step, branch `using-different-shells-for-each-step`
+Repo - <https://github.com/miroadamy-practice/github-actions-course/tree/using-different-shells-for-each-step>, branch `using-different-shells-for-each-step`
 
-The workflow: https://github.com/miroadamy-practice/github-actions-course/blob/using-different-shells-for-each-step/.github/workflows/simple.yml
+The workflow: <https://github.com/miroadamy-practice/github-actions-course/blob/using-different-shells-for-each-step/.github/workflows/simple.yml>
 
 ```yaml
 name: Shell Commands 
@@ -202,17 +199,16 @@ Note that:
 * to run different platform => needs new job
 * jobs run in parallel by default, but we have `needs: ["run-shell-command"]` key
 
-
 ## 01-06 Using a simple action
 
-See https://github.com/actions/hello-world-javascript-action
+See <https://github.com/actions/hello-world-javascript-action>
 
-It is used in https://github.com/miroadamy-practice/github-actions-course/blob/using-a-simple-action/.github/workflows/actions.yml
+It is used in <https://github.com/miroadamy-practice/github-actions-course/blob/using-a-simple-action/.github/workflows/actions.yml>
 (example of multiple workflows)
 
 Example:
 
-```
+```yaml
 uses: actions/hello-world-javascript-action@main
 with:
   who-to-greet: 'Mona the Octocat'
@@ -220,7 +216,7 @@ with:
 
 Note `uses` instead of `run` + reference to an action.
 
-It can be local (`./ path`) or public repository - action/hello-world-javascript-action@main 
+It can be local (`./ path`) or public repository - action/hello-world-javascript-action@main
 
 After @ either branch or version or commit (SHA1). Best practice => use version. The @v1 => latest of v1, e.g. v1.2.5
 
@@ -228,11 +224,11 @@ Actions are written in Javascript
 
 This action takes input. => `with` keyword
 
-Push triggered ALL workflow: simple.yml and action.yml => https://github.com/miroadamy-practice/github-actions-course/runs/7821324161?check_suite_focus=true
+Push triggered ALL workflow: simple.yml and action.yml => <https://github.com/miroadamy-practice/github-actions-course/runs/7821324161?check_suite_focus=true>
 
-The action output is VERY verbose => https://github.com/miroadamy-practice/github-actions-course/runs/7821324160?check_suite_focus=true
+The action output is VERY verbose => <https://github.com/miroadamy-practice/github-actions-course/runs/7821324160?check_suite_focus=true>
 
-```
+```sh
 run-github-actions
 succeeded 10 minutes ago in 3s
 Search logs
@@ -470,11 +466,11 @@ Run echo "19:11:29 GMT+0000 (Coordinated Universal Time)"
 Cleaning up orphan processes
 ```
 
-![](./img/simple-action-1.png)
+![simple action](./img/simple-action-1.png)
 
-The action can produce output - we add seconds step that refers the previous step named output. See `output` section of https://github.com/actions/hello-world-javascript-action 
+The action can produce output - we add seconds step that refers the previous step named output. See `output` section of <https://github.com/actions/hello-world-javascript-action>
 
-```
+```yaml
 {% raw %}
  - name: Log Greeting Time
         run: echo "${{ steps.greet.outputs.time }}"
@@ -503,16 +499,15 @@ try {
 }
 ```
 
-It is actually action that logs all that. 
+It is actually action that logs all that.
 
 ## 01-07 The Checkout Action
 
 Where does the code run ?
 
-See `the-checkout-action` branch - https://github.com/miroadamy-practice/github-actions-course/blob/the-checkout-action/.github/workflows/actions.yml
+See `the-checkout-action` branch - <https://github.com/miroadamy-practice/github-actions-course/blob/the-checkout-action/.github/workflows/actions.yml>
 
-
-```
+```yaml
 {% raw %}
 jobs: 
   run-github-actions: 
@@ -544,9 +539,9 @@ jobs:
 {% endraw %}
 ```
 
-The results of the first: 
+The results of the first:
 
-```
+```sh
 
   pwd
   ls -a
@@ -570,11 +565,11 @@ miroadamy-practice/github-actions-course
 
 Note that the workspace is empty. By default workflow does NOT clone
 
-=> action `actions/checkout` => https://github.com/actions/checkout, https://github.com/marketplace/actions/checkout@v1
+=> action `actions/checkout` => <https://github.com/actions/checkout>, <https://github.com/marketplace/actions/checkout@v1>
 
 Files after checkout:
 
-```
+```yaml
   pwd
   ls -a
   shell: /usr/bin/bash -e {0}
