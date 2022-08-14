@@ -4,4 +4,4 @@ POST https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/dispa
 Content-Type:  application/vnd.github+json" \ 
 Authorization: token {{ghtoken}}
 
-{"event_type":"on_demand_test","client_payload":{"unit":false,"integration":true}}
+{"event_type":"on_demand_test","client_payload":{"unit":false,"integration":true, "env": "production"}}
