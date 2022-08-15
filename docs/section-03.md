@@ -347,7 +347,35 @@ You can access context information using one of two syntaxes.
 
 ## 03-18 Using Functions in Expressions
 
-..
+We saw `toJson(github)`
+
+More: <https://docs.github.com/en/actions/learn-github-actions/expressions#functions>
+
+The scenario - branch chapter/03-18
+
+```yaml
+{% raw %}
+jobs:
+  functions: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: dump
+        run: |
+          echo ${{ contains( 'hello', '11' ) }}
+          echo ${{ startsWith( 'hello', 'he' ) }}
+          echo ${{ endsWith( 'hello', '1o' ) }}
+          echo ${{ format( 'Hello {0} {1} {2}', 'World', '!', '!' ) }}
+
+---
+
+false
+true
+false
+Hello World ! !
+
+{% endraw %}
+```
+
 
 ## 03-19 The If key && job status function
 
