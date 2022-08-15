@@ -72,15 +72,16 @@ STEP_ENV:
 ```
 
 GITHUB action - name of the step, if multiple - uses run1, run2 etc
+
 ## 03-14 Encrypting variables
 
-Go to User Profile settings, secrets 
+Go to User Profile settings, secrets
 
 I have defined secret at repo level but any attempt to print it fails (feature)
 
 ![secret](./img/secrets.png)
 
-See the hacks around it: https://github.com/miroadamy-practice/github-actions-demo-1/runs/7838712995?check_suite_focus=true
+See the hacks around it: <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7838712995?check_suite_focus=true>
 
 Special secret - can be used directly without creating it
 
@@ -91,18 +92,16 @@ ${{ secrets.GITHUB_TOKEN }}
 
 ```
 
+## 03-15 Using GITHUB_TOKEN
 
-## 03-15 Using GITHUB_TOKEN 
+Use case: Use Github action that does something with repo and needs authentication
+
+Docs: <https://docs.github.com/en/actions/security-guides/automatic-token-authentication>
 
 ## 03-16 Encrypting and decrypting files
 
-
 ## 03-17 Expressions and contexts
-
 
 ## 03-18 Using Functions in Expressions
 
 ## 03-19 The If key && job status function
-
-
-
