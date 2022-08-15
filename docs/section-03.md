@@ -102,7 +102,6 @@ Use case: Use Github action that does something with repo and needs authenticati
 
 Docs: <https://docs.github.com/en/actions/security-guides/automatic-token-authentication>
 
-
 ```yaml
 name: Pull request labeler
 on: [ pull_request_target ]
@@ -143,9 +142,10 @@ jobs:
             }' \
           --fail
 ```
-This is in https://github.com/miroadamy-practice/github-actions-demo-1/commit/1f68498caa44ccffd12c8d205d4061b3b5ca14dc (must be in main branch to be target of the dispatch)
 
-Note - https://github.com/miroadamy-practice/github-actions-demo-1/issues/4
+This is in <https://github.com/miroadamy-practice/github-actions-demo-1/commit/1f68498caa44ccffd12c8d205d4061b3b5ca14dc> (must be in main branch to be target of the dispatch)
+
+Note - <https://github.com/miroadamy-practice/github-actions-demo-1/issues/4>
 
 Also - used to modify repo
 
@@ -177,7 +177,7 @@ jobs:
 
 ```
 
-Test in https://github.com/miroadamy-practice/github-actions-demo-1/tree/d26aad05dbdb91a4669167f43d322f08ae9f1f83
+Test in <https://github.com/miroadamy-practice/github-actions-demo-1/tree/d26aad05dbdb91a4669167f43d322f08ae9f1f83>
 
 ```sh
 ### Update repo
@@ -190,9 +190,10 @@ Authorization: token {{ghtoken}}
 
 ```
 
-See the commit: https://github.com/miroadamy-practice/github-actions-demo-1/commit/1b7a3a91fcd6b371d4f8edb460472acac57f2ee3
+See the commit: <https://github.com/miroadamy-practice/github-actions-demo-1/commit/1b7a3a91fcd6b371d4f8edb460472acac57f2ee3>
 
 There is most likely ready to use action for this
+
 ## 03-16 Encrypting and decrypting files
 
 Limitation:
@@ -200,7 +201,7 @@ Limitation:
 * Secrets in GH - 64K max
 * using CLI that works with files => cannot use GH stored secrets
 
-Use - GPG - https://www.gnupg.org/
+Use - GPG - <https://www.gnupg.org/>
 
 ```sh
  gpg --version
@@ -253,7 +254,6 @@ git commit -m "Add new decryption script"
 git push
 ```
 
-
 Workflow: see <https://github.com/miroadamy-practice/github-actions-course/blob/encrypting-and-decrypting-files/.github/workflows/env.yml>
 
 ```yaml
@@ -269,12 +269,80 @@ jobs:
       - name: Print our file content 
         run: cat $HOME/secret.json
 ```
+
 ## 03-17 Expressions and contexts
 
-..
+See <https://docs.github.com/en/actions/learn-github-actions/contexts>
+
+The syntax of expressions:
+
+```sh
+{% raw %}
+${{ context.expression }}
+{% endraw %}
+```
+
+Inside can be
+
+* literals
+* expressions
+* functions
+
+Top level objects (== contexts)
+
+* secrets
+* github
+
+All: <https://docs.github.com/en/actions/learn-github-actions/contexts>
+
+* github: Information about the workflow run. For more information, see github context.
+* env: Contains environment variables set in a workflow, job, or step.
+* job: Information about the currently running job.
+* steps: Information about the steps that have been run in the current job.
+* runner: Information about the runner that is running the current job.
+* secrets: Contains the names and values of secrets that are available to a workflow run.
+* strategy: Information about the matrix execution strategy for the current job.
+* matrix: Contains the matrix properties defined in the workflow that apply to the current job.
+* needs:  Contains the outputs of all jobs that are defined as a dependency of the current job.
+* inputs: Contains the inputs of a reusable or manually triggered workflow.
+
+See log-contexts.yml - <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7842217621?check_suite_focus=true>
+
+```yml
+name: Context testing
+on: 
+  push:
+    branches:
+      - chapter/03-17
+
+jobs:
+  dump_contexts_to_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump job context
+        run: echo '${{ toJSON(job) }}'
+      - name: Dump steps context
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+      - name: Dump matrix context
+        run: echo '${{ toJSON(matrix) }}'
+```
+
+You can access context information using one of two syntaxes.
+
+* Index syntax: `github['sha']`
+* Property dereference syntax: `github.sha`
+
 ## 03-18 Using Functions in Expressions
 
 ..
+
 ## 03-19 The If key && job status function
 
 ..
