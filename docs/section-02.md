@@ -223,6 +223,56 @@ The event payload: {
 
 The tokens are defined in the `.vscode/settings.json`
 
-## 02-12
+## 02-12 Filtering by Branches, Tags and Paths
 
-zz
+See <https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet>
+
+```yaml
+
+on:
+  push:
+    branches:
+      - master
+```
+
+Same goes for `pull_request` (target branch)
+
+We can use patterns on branch name:
+
+'feature/*' => 'feature/f1', 'feature/other', but not 'feature/sub/name'
+
+'feature/**' => also matches 'feature/sub/name'
+
+All except branch: `branches_ignore`
+
+Ignore single feature - '!feature/feat-ignore'
+
+```yaml
+
+on:
+  push:
+    branches_ignore:
+      - master
+      - develop
+```
+
+only on of `branches_ignore` or `branches`
+
+Similarly - tags: and tags_ignore:
+
+Filtering by paths: if the file matching is changed
+
+```yaml
+
+  paths:
+    - '**.js'
+
+---
+  paths_ignore:
+    - 'docs/**'
+
+```
+
+Also works works with '!ignored-file.js'
+
+
