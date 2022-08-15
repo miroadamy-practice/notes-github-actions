@@ -103,6 +103,7 @@ Use case: Use Github action that does something with repo and needs authenticati
 Docs: <https://docs.github.com/en/actions/security-guides/automatic-token-authentication>
 
 ```yaml
+{% raw %}
 name: Pull request labeler
 on: [ pull_request_target ]
 
@@ -117,9 +118,11 @@ jobs:
       - uses: actions/labeler@v4
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+{% endraw %}          
 ```
 
 ```yaml
+{% raw %}
 name: Create issue on commit
 
 on: [ push ]
@@ -141,6 +144,7 @@ jobs:
             "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
             }' \
           --fail
+{% endraw %}
 ```
 
 This is in <https://github.com/miroadamy-practice/github-actions-demo-1/commit/1f68498caa44ccffd12c8d205d4061b3b5ca14dc> (must be in main branch to be target of the dispatch)
@@ -152,6 +156,7 @@ Also - used to modify repo
 Should use https based URLS - see <https://github.com/miroadamy-practice/github-actions-course/tree/using-the-github-token-secret-for-authentication>
 
 ```yaml
+{% raw %}
 jobs: 
   create_issue:
     runs-on: ubuntu-latest
@@ -175,6 +180,7 @@ jobs:
           git commit -m"Random file"
           git push
 
+{% endraw %}
 ```
 
 Test in <https://github.com/miroadamy-practice/github-actions-demo-1/tree/d26aad05dbdb91a4669167f43d322f08ae9f1f83>
