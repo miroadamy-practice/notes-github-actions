@@ -2,9 +2,15 @@
 
 How to use Strategy, Matrix and Docker Container in jobs
 
-## 04-20 a
+## 04-20 Continue on error + timeout
 
-xx
+Keyword `[needs]` => waits for results of other job
+
+Run even if all fails `continue_on_error`
+
+`timeout-minutes`: 360 (default), 
+
+No demo. Check [docs](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscontinue-on-error)
 
 ## 04-21 b
 
