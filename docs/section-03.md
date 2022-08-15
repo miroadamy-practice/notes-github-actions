@@ -376,7 +376,45 @@ Hello World ! !
 {% endraw %}
 ```
 
-
 ## 03-19 The If key && job status function
 
-..
+Return status of job - see <https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions>
+
+Key `if` in job => job runs if conditions, does not need curly brackets
+
+Can be used in steps or in jobs
+
+can cause the second step runs on failure: `if: failure()`
+
+Can use `always()`
+
+Demo - <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7844353981?check_suite_focus=true>
+
+```yaml
+{% raw %}
+  dump_contexts_to_log:
+    runs-on: ubuntu-latest
+    steps:
+        # this always runs
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+        # next one will fail
+      - name: Dump job context
+        run: eccho '${{ toJSON(job) }}'
+      - name: Dump steps context
+        # This runs on failure
+        if: failure()
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+        # The last one always runs
+      - name: Dump matrix context
+        if: always()
+        run: echo '${{ toJSON(matrix) }}'
+{% endraw %}
+```
+
+![if-fnc](./img/if-fnc.png)
