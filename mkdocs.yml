@@ -10,7 +10,9 @@ nav:
     - Notes: 
         - 01 - Intro: section-01.md
         - 02 - Events, Schedulers, Filters: section-02.md
-        - 03: section-03.md
+        - 03 - Env variables, Encryption: section-03.md
+        - 04: section-04.md
+        - 05: section-05.md
     - Demo:
         - Markdown: markdown-demo.md
         - Macros: macros-demo1.md

@@ -18,7 +18,7 @@ In section 1 we will have a quick conceptual introduction to what workflows, act
 
 In section 2 we will get a bit deeper and learn different ways that we can use in order to trigger a workflow to run. This includes GitHub events like push and pull_request, cron schedules and also external events. We will also see how to make a workflow only run for certain branches, tags and directory paths.
 
-### [Section-3 - ](./section-03.md)
+### [Section-3 - Environment variables, encryption, expressions and context](./section-03.md)
 
 
 In this section we will see how can we use default environment variables and also how to add custom environment variables. We will also see how to encrypt environment variables that are sensitive and also how to encrypt and decrypt sensitive files that we don't won't to push to our repository. Moreover, we will see the GITHUB_TOKEN environment variable and how to use it for authentication. Also we will take a look at the context information that we can access in our workflows which contains a lot of information about our current workflow and virtual machine and more. Finally we will take a look at different functions that are available to use in our workflows.
