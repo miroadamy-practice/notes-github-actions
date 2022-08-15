@@ -195,8 +195,86 @@ See the commit: https://github.com/miroadamy-practice/github-actions-demo-1/comm
 There is most likely ready to use action for this
 ## 03-16 Encrypting and decrypting files
 
+Limitation:
+
+* Secrets in GH - 64K max
+* using CLI that works with files => cannot use GH stored secrets
+
+Use - GPG - https://www.gnupg.org/
+
+```sh
+ gpg --version
+gpg (GnuPG) 2.3.7
+libgcrypt 1.10.1
+Copyright (C) 2021 Free Software Foundation, Inc.
+License GNU GPL-3.0-or-later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Home: /Users/miroadamy/.gnupg
+Supported algorithms:
+Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
+Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+        CAMELLIA128, CAMELLIA192, CAMELLIA256
+AEAD: EAX, OCB
+Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
+Compression: Uncompressed, ZIP, ZLIB, BZIP2
+```
+
+Running it:
+
+```sh
+gpg --symmetric --cipher-algo AES256 my_secret.json
+```
+
+Save passphrase, will need to be stored in GH Secret
+
+Add encrypted file
+
+Create decrypt script, add both encrypted and decryptor to repo
+
+```sh
+#!/bin/sh
+
+# Decrypt the file
+mkdir $HOME/secrets
+# --batch to prevent interactive command
+# --yes to assume "yes" for questions
+gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
+--output $HOME/secrets/my_secret.json my_secret.json.gpg
+
+---
+
+git add my_secret.json.gpg
+git commit -m "Add new encrypted secret JSON file"
+chmod +x decrypt_secret.sh
+git add decrypt_secret.sh
+git commit -m "Add new decryption script"
+git push
+```
+
+
+Workflow: see <https://github.com/miroadamy-practice/github-actions-course/blob/encrypting-and-decrypting-files/.github/workflows/env.yml>
+
+```yaml
+jobs:
+  decrypt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Decrypt
+        run: gpg --quiet --batch --yes --decrypt --passphrase="$PASSPHRASE" --output $HOME/secret.json secret.json.gpg
+        env: 
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+      - name: Print our file content 
+        run: cat $HOME/secret.json
+```
 ## 03-17 Expressions and contexts
 
+..
 ## 03-18 Using Functions in Expressions
 
+..
 ## 03-19 The If key && job status function
+
+..
