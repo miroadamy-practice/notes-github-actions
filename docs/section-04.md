@@ -318,11 +318,80 @@ jobs:
 
 Test: <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7867200466?check_suite_focus=true>
 
+## 04-27 Running Docker Containers in Individual Steps
+
+Demo <https://github.com/miroadamy-practice/github-actions-course/blob/running-docker-containers-in-individual-steps/.github/workflows/container.yml>
+
+We use docker in the main job, as well as in steps
+
+```yml
+name: Container
+on: 
+  push:
+    branches:
+      - chapter/04-27
+
+jobs: 
+  docker-steps:
+    runs-on: ubuntu-latest
+    container:
+      image: node:10.18.0-jessie
+    steps:
+      - name: log node version
+        run: node -v
+      - name: Step with docker
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          entrypoint: "/bin/echo"
+          args: "Hello World"
+      - name: Log node version
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          entrypoint: /usr/local/bin/node
+          args: -v
+  node-docker:
+    runs-on: ubuntu-latest
+    services:
+      app:
+        image: alialaa17/node-api
+        ports:
+          - 3001:3000
+      mongo:
+        image: mongo
+        ports:
+          - "27017:27017"
+    steps:
+      - name: Post a user
+        run: 'curl -X POST http://localhost:3001/api/user -H ''Content-Type: application/json'' -d ''{"username": "hello","address": "dwded"}'''
+      - name: Get Users
+        run: curl http://localhost:3001/api/users
+```
+
+ENTRYPOINT: runs when container starts, shell form == `ENTRYPOINT echo Hello` and command version `ENTRYPOINT ['/bin/echo', 'Hello']`
+
+CMD ['World' ] - additional arguments to ENTRYPOINT
+
+We can use docker containers in `uses` key, we can override entrypoint with the `with` key => must be broken apart,
+
+See <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7867646458?check_suite_focus=true>
+
+```txt
+# log node version
+Run node -v
+v10.18.0
+---
+Run docker://node:12.14.1-alpine3.10
+/usr/bin/docker run --name node12141alpine310_2c452c --label 94859b --workdir /github/workspace --rm -e INPUT_ENTRYPOINT -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_RUN_ATTEMPT -e GITHUB_ACTOR -e GITHUB_TRIGGERING_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_REF_NAME -e GITHUB_REF_PROTECTED -e GITHUB_REF_TYPE -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e GITHUB_STEP_SUMMARY -e RUNNER_OS -e RUNNER_ARCH -e RUNNER_NAME -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true --entrypoint "/bin/echo" --network github_network_972ee09b694a4227b270dacec04cd80a -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github-actions-demo-1/github-actions-demo-1":"/github/workspace" node:12.14.1-alpine3.10 Hello World
+Hello World
+---
+Run docker://node:12.14.1-alpine3.10
+/usr/bin/docker run --name node12141alpine310_5ee563 --label 94859b --workdir /github/workspace --rm -e INPUT_ENTRYPOINT -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_RUN_ATTEMPT -e GITHUB_ACTOR -e GITHUB_TRIGGERING_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_REF_NAME -e GITHUB_REF_PROTECTED -e GITHUB_REF_TYPE -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e GITHUB_STEP_SUMMARY -e RUNNER_OS -e RUNNER_ARCH -e RUNNER_NAME -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true --entrypoint "/usr/local/bin/node" --network github_network_972ee09b694a4227b270dacec04cd80a -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github-actions-demo-1/github-actions-demo-1":"/github/workspace" node:12.14.1-alpine3.10 -v
+v12.14.1
 
 
-## 04-27 a
+```
 
-xx
+
 
 ## 04-28 a
 
