@@ -22,3 +22,14 @@ Content-Type:  application/vnd.github+json" \
 Authorization: token {{ghtoken}}
 
 {"event_type":"modify_repo","client_payload":{"unit":false,"integration":true, "env": "production"}}
+
+### Demo App 
+
+GET http://localhost:3001/api/users 
+
+### Create new user
+POST http://localhost:3001/api/user 
+Content-Type:  application/json"
+
+{ "username": "Nobody", "address": "123 Main St"}
+
