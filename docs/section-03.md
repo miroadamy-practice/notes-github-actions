@@ -263,6 +263,8 @@ git push
 Workflow: see <https://github.com/miroadamy-practice/github-actions-course/blob/encrypting-and-decrypting-files/.github/workflows/env.yml>
 
 ```yaml
+{% raw %}
+
 jobs:
   decrypt:
     runs-on: ubuntu-latest
@@ -274,6 +276,8 @@ jobs:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
       - name: Print our file content 
         run: cat $HOME/secret.json
+{% endraw %}
+
 ```
 
 ## 03-17 Expressions and contexts
@@ -315,6 +319,8 @@ All: <https://docs.github.com/en/actions/learn-github-actions/contexts>
 See log-contexts.yml - <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7842217621?check_suite_focus=true>
 
 ```yml
+{% raw %}
+
 name: Context testing
 on: 
   push:
@@ -338,6 +344,8 @@ jobs:
         run: echo '${{ toJSON(strategy) }}'
       - name: Dump matrix context
         run: echo '${{ toJSON(matrix) }}'
+{% endraw %}
+
 ```
 
 You can access context information using one of two syntaxes.
