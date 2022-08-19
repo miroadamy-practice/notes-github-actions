@@ -391,12 +391,59 @@ v12.14.1
 
 ```
 
-
-
 ## 04-28 a
 
-xx
+Will use own script in GH action
 
 ## 04-29 a
 
-xx
+```sh
+#!/bin/sh
+echo "Running script with arguments: $1 $2"
+echo "Hello World"
+```
+
+See <https://github.com/miroadamy-practice/github-actions-course/blob/creating-our-own-executable-file-and-running-it-in-our-steps/.github/workflows/container.yml>
+
+Must checkout first:
+
+```yaml
+...
+      - uses: actions/checkout@v1 
+      - name: run custom script
+        run: ./script.sh "Without Docker"
+      - name: run in docker  
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          entrypoint: ./script.sh
+          args: "Some string"  
+...
+```
+
+See <https://github.com/miroadamy-practice/github-actions-demo-1/blob/chapter/04-28/.github/workflows/container2.yml>
+
+Result: <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2891761023>
+
+```txt
+
+Run ./script.sh "Without Docker"
+  ./script.sh "Without Docker"
+  shell: sh -e {0}
+Running script with arguments: Without Docker 
+Hello World
+
+---
+
+Run docker://node:12.14.1-alpine3.10
+  with:
+    entrypoint: ./script.sh
+    args: Some string
+/usr/bin/docker run --name node12141alpine310_4ede06 --label 94859b --workdir /github/workspace --rm -e INPUT_ENTRYPOINT -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_RUN_ATTEMPT -e GITHUB_ACTOR -e GITHUB_TRIGGERING_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_REF_NAME -e GITHUB_REF_PROTECTED -e GITHUB_REF_TYPE -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e GITHUB_STEP_SUMMARY -e RUNNER_OS -e RUNNER_ARCH -e RUNNER_NAME -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true --entrypoint "./script.sh" --network github_network_02c090ab076e46b5af036182e8f3e7d7 -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github-actions-demo-1/github-actions-demo-1":"/github/workspace" node:12.14.1-alpine3.10 Some string
+Running script with arguments: Some string
+Hello World
+
+
+```
+
+Note that all repo is available INSIDE docker container
+
