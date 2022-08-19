@@ -203,6 +203,7 @@ jobs:
 There is new section: initialize-container - <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7866390271?check_suite_focus=true>
 
 ```txt
+{% raw %}
 2s
 Checking docker version
   /usr/bin/docker version --format '{{.Server.APIVersion}}'
@@ -237,6 +238,8 @@ Starting job container
   NODE_VERSION=16.16.0
   YARN_VERSION=1.22.19
 Waiting for all services to be ready
+{% endraw %}
+
 ```
 
 There can be more options - `env`, `ports`, `volumes`
