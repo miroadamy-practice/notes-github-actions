@@ -394,11 +394,9 @@ v12.14.1
 
 ```
 
-## 04-28 a
+## 04-28 Running own script in and out of Docker in step
 
 Will use own script in GH action
-
-## 04-29 a
 
 ```sh
 #!/bin/sh
@@ -449,4 +447,40 @@ Hello World
 ```
 
 Note that all repo is available INSIDE docker container
+
+## 04-29 Sending a Slack Message Using a Docker Container
+
+See <https://github.com/miroadamy-practice/github-actions-course/blob/sending-a-slack-message-using-a-docker-container/.github/workflows/container.yml>
+
+Using tool: <https://hub.docker.com/r/technosophos/slack-notify/>
+
+```yaml
+{% raw %}
+     - name: send a slack message
+        uses: docker://technosophos/slack-notify
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "Hello slack from my GITHUB ACTION - ${{ toJSON(github) }}, triggered by $GITHUB_EVENT_NAME from $GITHUB_REPOSITORY"
+
+{% endraw %}
+```
+
+Need to get SLACK_WEBHOOK
+
+Create new app - api.slack.com/apps, Create new App, select Incoming Webhooks => allow (was off)
+
+Select `Add new Webhook to an appspace` => `Github Actions` channel => `***REMOVED***`
+
+
+Cannot use directly => slack will detect
+
+We need secret
+
+![secrets](./img/gh-secrets.png)
+
+
+Run: => 
+
+![notification](./img/gh-slack.png)
+
 
