@@ -4,7 +4,6 @@ We need something to deploy as part of the deployment app.
 
 ## 05-30 Creating a ReactJS Boilerplate Application
 
-
 See <https://create-react-app.dev/docs/getting-started>
 
 `npx create-react-app react-app --use-npm`
@@ -81,7 +80,6 @@ npm notice Run npm install -g npm@8.18.0 to update!
 npm notice 
 
 ```
-
 
 aa
 
@@ -184,7 +182,6 @@ gitpod /workspace/github-actions-demo-1/react-app/coverage/lcov-report (main) $ 
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 ```
 
-
 ![html](./img/html-preview.png)
 
 Build for production => `npm run build` => `./build`
@@ -195,7 +192,7 @@ This is what needs to be deployed for production
 
 Surge - to deploy static websites: <https://surge.sh/>
 
-```
+```sh
 $ npm install --global surge
 $ surge
   project: ~/Jane/Desktop/my-project/
@@ -243,7 +240,7 @@ Add `.prettierrc` - from Web config
 
 Add `.prettierignore`
 
-Run locally: 
+Run locally:
 
 ```sh
 gitpod /workspace/github-actions-demo-1/react-app (main) $ npx prettier --check "**/*.js" 
@@ -319,13 +316,12 @@ src/setupTests.js 3ms
 
 * test
 * format
-* build 
+* build
 * deploy
-
 
 ## 05-34 Planning the workflow
 
-Planning is about: Multiple team members - pushing code, which branches, which PRs 
+Planning is about: Multiple team members - pushing code, which branches, which PRs
 
 * artifacts => logs (can be downloaded)
 
@@ -340,9 +336,9 @@ Merge to develop => WF => tests again, deploys to staging
 
 Merge to master => PR from develop, WF => tests, formatting, review and approve => merge, triggers deployment to production
 
-### Workflows:
+### Workflows
 
-#### Steps Feature PR:
+#### Steps Feature PR
 
 * install dependencies
 * check code fmt
@@ -350,7 +346,7 @@ Merge to master => PR from develop, WF => tests, formatting, review and approve 
 * upload code coverage as artifact
 * cache dependecies
 
-#### Steps merge to Develop:
+#### Steps merge to Develop
 
 * install dependencies
 * check code fmt
@@ -361,7 +357,7 @@ Merge to master => PR from develop, WF => tests, formatting, review and approve 
 * deploy to staging
 * cache dependencies
 
-#### Steps Develop PR:
+#### Steps Develop PR
 
 * install dependencies
 * check code fmt
@@ -369,7 +365,7 @@ Merge to master => PR from develop, WF => tests, formatting, review and approve 
 * upload code coverage as artifact
 * cache dependecies
 
-#### Steps merge to master:
+#### Steps merge to master
 
 * install dependencies
 * check code fmt
@@ -391,7 +387,6 @@ Release created => send slack message
 * release has version, change log, assets
 
 We will generate version number and release notes
-
 
 ## 05-35 a
 
@@ -416,6 +411,7 @@ zz
 ## 05-42 a
 
 zz
+
 ## 05-43 a
 
 zz
