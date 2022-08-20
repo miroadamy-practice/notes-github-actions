@@ -235,5 +235,90 @@ Must use same domain every time
 
 ## 05-33 Using Prettier to Check for Code Formatting Rules
 
-Enforce fomatting rules
+Enforce fomatting rules - <https://prettier.io/>
+
+`npm install --save-dev --save-exact prettier`
+
+Add `.prettierrc` - from Web config
+
+Add `.prettierignore`
+
+Run locally: 
+
+```sh
+gitpod /workspace/github-actions-demo-1/react-app (main) $ npx prettier --check "**/*.js" 
+Checking formatting...
+[warn] src/App.js
+[warn] src/App.test.js
+[warn] src/index.js
+[warn] src/reportWebVitals.js
+[warn] Code style issues found in 4 files. Forgot to run Prettier?
+```
+
+=> returns != 0 exit code
+
+Format it:
+
+```sh
+gitpod /workspace/github-actions-demo-1/react-app (main) $ npx prettier --write "**/*.js" 
+src/App.js 63ms
+src/App.test.js 9ms
+src/index.js 10ms
+src/reportWebVitals.js 8ms
+src/setupTests.js 3ms
+---
+gitpod /workspace/github-actions-demo-1/react-app (main) $ npx prettier --check "**/*.js" 
+Checking formatting...
+All matched files use Prettier code style!
+```
+
+Add custom script to `package.json`
+
+```json
+...
+"scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "format:check": "prettier --check \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\""
+  },
+...
+```
+
+and use as `npm run format:check`
+
+```sh
+gitpod /workspace/github-actions-demo-1/react-app (main) $ npm run format:check
+
+> react-app@0.1.0 format:check
+> prettier --check "**/*.{js,jsx,yml,yaml,json,css,scss,md}"
+
+Checking formatting...
+All matched files use Prettier code style!
+
+---
+gitpod /workspace/github-actions-demo-1/react-app (main) $ npm run format
+
+> react-app@0.1.0 format
+> prettier --write "**/*.{js,jsx,yml,yaml,json,css,scss,md}"
+
+public/manifest.json 52ms
+README.md 57ms
+src/App.css 43ms
+src/App.js 18ms
+src/App.test.js 9ms
+src/index.css 6ms
+src/index.js 7ms
+src/reportWebVitals.js 9ms
+src/setupTests.js 3ms
+```
+
+3 things for workflow:
+
+* test
+* format
+* build 
+* deploy
 
