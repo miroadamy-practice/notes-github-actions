@@ -388,13 +388,131 @@ Release created => send slack message
 
 We will generate version number and release notes
 
-## 05-35 a
+## 05-35 Setting Up Our Repository
 
-zz
+CODEOWNERS file: <https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners>
 
-## 05-36 a
+* create a new file called CODEOWNERS in the root, docs/, or .github/ directory of the repository, in the branch where you'd like to add the code owners.
+* different types of files / folder can be owned by different owners
+* code owners must have write permissions for the repository
+* Code owners are automatically requested for review when someone opens a pull request that modifies code that they own.
+* CODEOWNERS file uses a pattern that follows most of the same rules used in gitignore files, with some exceptions. The pattern is followed by one or more GitHub usernames or team names using the standard @username or @org/team-name format.
 
-zz
+### Example of CODEOWNERS file
+
+```sh
+# This is a comment.
+# Each line is a file pattern followed by one or more owners.
+
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @global-owner1 and @global-owner2 will be requested for
+# review when someone opens a pull request.
+*       @global-owner1 @global-owner2
+
+# Order is important; the last matching pattern takes the most
+# precedence. When someone opens a pull request that only
+# modifies JS files, only @js-owner and not the global
+# owner(s) will be requested for a review.
+*.js    @js-owner
+
+# You can also use email addresses if you prefer. They'll be
+# used to look up users just like we do for commit author
+# emails.
+*.go docs@example.com
+
+# Teams can be specified as code owners as well. Teams should
+# be identified in the format @org/team-name. Teams must have
+# explicit write access to the repository. In this example,
+# the octocats team in the octo-org organization owns all .txt files.
+*.txt @octo-org/octocats
+
+# In this example, @doctocat owns any files in the build/logs
+# directory at the root of the repository and any of its
+# subdirectories.
+/build/logs/ @doctocat
+
+# The `docs/*` pattern will match files like
+# `docs/getting-started.md` but not further nested files like
+# `docs/build-app/troubleshooting.md`.
+docs/*  docs@example.com
+
+# In this example, @octocat owns any file in an apps directory
+# anywhere in your repository.
+apps/ @octocat
+
+# In this example, @doctocat owns any file in the `/docs`
+# directory in the root of your repository and any of its
+# subdirectories.
+/docs/ @doctocat
+
+# In this example, any change inside the `/scripts` directory
+# will require approval from @doctocat or @octocat.
+/scripts/ @doctocat @octocat
+
+# In this example, @octocat owns any file in the `/apps`
+# directory in the root of your repository except for the `/apps/github`
+# subdirectory, as its owners are left empty.
+/apps/ @octocat
+/apps/github
+```
+
+I will clear all workflows and set up develop branch
+
+### Branch protection rules
+
+Go to <https://github.com/miroadamy-practice/github-actions-demo-1/settings/branches>
+
+I cannot do this - only one user, cannot approve own PR
+
+Added CODEOWNERS file, removed restrictions - can push and merge locally
+
+## 05-36 Creating the Develop PR workflow
+
+In workflow branch
+
+=> set up that `build` is required for branch merging
+
+I had to remove requirement on PR => cannot approve own PR.
+Ali uses second identity, too much hassle
+
+The `ci.yaml` so far:
+
+```yaml
+name: CI 
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: use Node 16
+        uses: actions/setup-node@v3
+        with: 
+            node-version: "16"
+      - name: Install dependencies
+        run: |
+          cd react-app
+          npm ci 
+      - name: Check format
+        run: |
+          cd react-app
+          npm run format:check
+      - name: Test
+        run: |
+          cd react-app
+          npm test -- --coverage
+        env:
+          CI: true
+        
+          
+```
+
+Started to use local VS-Code to save gitpod minutes
 
 ## 05-37 a
 
