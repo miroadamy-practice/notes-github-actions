@@ -87,9 +87,114 @@ aa
 
 ## 05-31 Building & Testing the Application Locally
 
-aa
+See package.json => defines scripts
 
-## 05-32 Using Prettier to Check for Code Formatting Rules
+```json
+...
+"scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  ...
+```
+
+See also the [README.md](https://github.com/miroadamy-practice/github-actions-demo-1/blob/main/react-app/README.md)
+
+We care only about tests
+
+`npm run test`
+
+```sh
+ PASS  src/App.test.js
+  ✓ renders learn react link (22 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.331 s, estimated 1 s
+Ran all test suites.
+
+Watch Usage
+ › Press f to run only failed tests.
+ › Press o to only run tests related to changed files.
+ › Press q to quit watch mode.
+ › Press p to filter by a filename regex pattern.
+ › Press t to filter by a test name regex pattern.
+ › Press Enter to trigger a test run.
+```
+
+Disable watch mode: `CI=true`
+
+```sh
+gitpod /workspace/github-actions-demo-1/react-app (main) $ CI=true npm run test
+
+> react-app@0.1.0 test
+> react-scripts test
+
+PASS src/App.test.js
+  ✓ renders learn react link (44 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.117 s
+Ran all test suites.
+```
+
+Test checks if we have text `Learn React`
+
+Generate coverage report:
+
+```sh
+gitpod /workspace/github-actions-demo-1/react-app (main) $ CI=true npm run test -- --coverage
+
+> react-app@0.1.0 test
+> react-scripts test "--coverage"
+
+PASS src/App.test.js
+  ✓ renders learn react link (33 ms)
+
+--------------------|---------|----------|---------|---------|-------------------
+File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+--------------------|---------|----------|---------|---------|-------------------
+All files           |    8.33 |        0 |   33.33 |    8.33 |                   
+ App.js             |     100 |      100 |     100 |     100 |                   
+ index.js           |       0 |      100 |     100 |       0 | 7-17              
+ reportWebVitals.js |       0 |        0 |       0 |       0 | 1-8               
+--------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        2.259 s
+Ran all test suites.
+
+```
+
+It also generates file in lcov-report:
+
+Preview on GitPod:
+
+```sh
+gitpod /workspace/github-actions-demo-1/react-app (main) $ pwd
+/workspace/github-actions-demo-1/react-app
+gitpod /workspace/github-actions-demo-1/react-app (main) $ cd coverage/lcov-report/
+gitpod /workspace/github-actions-demo-1/react-app/coverage/lcov-report (main) $ python -m http.server 8000 
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+```
+
+
+![html](./img/html-preview.png)
+
+Build for production => `npm run build` => `./build`
+
+This is what needs to be deployed for production
+
+## 05-32 Deploying app using Surge
+
+
+## 05-33 Using Prettier to Check for Code Formatting Rules
 
 aa
 
