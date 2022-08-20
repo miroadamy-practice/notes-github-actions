@@ -193,8 +193,47 @@ This is what needs to be deployed for production
 
 ## 05-32 Deploying app using Surge
 
+Surge - to deploy static websites: <https://surge.sh/>
+
+```
+$ npm install --global surge
+$ surge
+  project: ~/Jane/Desktop/my-project/
+   domain: my-project.surge.sh
+   upload: [============]
+Success! Published and running at my-project.surge.sh
+```
+
+Does not work:
+
+```sh
+gitpod /workspace/github-actions-demo-1/react-app (main) $ surge
+
+   Welcome to surge! (surge.sh)
+   Login (or create surge account) by entering email & password.
+
+          email: miro.adamy@gmail.com
+       password: 
+
+   Running as miro.adamy@gmail.com (Student)
+
+        project: /workspace/github-actions-demo-1/react-app/
+         domain: instinctive-string.surge.sh
+         upload: [====================] 100% eta: 0.0s (17 files, 1266103 bytes)
+            CDN: [====================] 100%
+     encryption: *.surge.sh, surge.sh (270 days)
+             IP: 138.197.235.123
+
+   Success! - Published to instinctive-string.surge.sh
+```
+
+Must run after `npm run build` `cd build; surge`
+
+Use `https://instinctive-string.surge.sh/`
+
+Must use same domain every time
 
 ## 05-33 Using Prettier to Check for Code Formatting Rules
 
-aa
+Enforce fomatting rules
 
