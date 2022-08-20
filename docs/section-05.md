@@ -325,7 +325,73 @@ src/setupTests.js 3ms
 
 ## 05-34 Planning the workflow
 
-aa
+Planning is about: Multiple team members - pushing code, which branches, which PRs 
+
+* artifacts => logs (can be downloaded)
+
+master + develop => protected branches, no push, only PR => approved
+
+`master` => deploy to production
+`develop` => latest integrated develop code
+
+Feature branch => PR => triggers WF that runs tests and formatting => approve => merge to develop
+
+Merge to develop => WF => tests again, deploys to staging
+
+Merge to master => PR from develop, WF => tests, formatting, review and approve => merge, triggers deployment to production
+
+### Workflows:
+
+#### Steps Feature PR:
+
+* install dependencies
+* check code fmt
+* run automated tests
+* upload code coverage as artifact
+* cache dependecies
+
+#### Steps merge to Develop:
+
+* install dependencies
+* check code fmt
+* run automated tests
+* upload code coverage as artifact
+* build project
+* upload build as artifact
+* deploy to staging
+* cache dependencies
+
+#### Steps Develop PR:
+
+* install dependencies
+* check code fmt
+* run automated tests
+* upload code coverage as artifact
+* cache dependecies
+
+#### Steps merge to master:
+
+* install dependencies
+* check code fmt
+* run automated tests
+* upload code coverage as artifact
+* upload build as artifact
+* create a release
+* deploy to prod
+* upload coverage to Codecov
+* cache dependencies
+
+Job failure: => create issue
+Issue created => slack message
+Release created => send slack message
+
+### Creating release
+
+* releases tab
+* release has version, change log, assets
+
+We will generate version number and release notes
+
 
 ## 05-35 a
 
