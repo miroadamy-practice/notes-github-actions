@@ -514,9 +514,71 @@ jobs:
 
 Started to use local VS-Code to save gitpod minutes
 
-## 05-37 a
+## 05-37 Creating the Develop Merge workflow
 
-zz
+Running when the feature branch is merged to develop
+
+We can duplicate and modify => duplicate code, or use if conditions
+
+Same branch, using IF statements
+
+For surge, need to use the old domain. Use `surge list` to see the domains
+
+```sh
+➜  github-actions-demo-1 git:(workflow) ✗ npx surge list
+env: node: No such file or directory
+➜  github-actions-demo-1 git:(workflow) ✗ nvm use default
+🚨 NVM not loaded! Loading now...
+Now using node v16.13.1 (npm v8.3.1)
+➜  github-actions-demo-1 git:(workflow) ✗ npx surge list 
+Need to install the following packages:
+  surge
+
+...
+
+➜  react-app git:(workflow) ✗ npx surge list
+
+   Welcome to surge! (surge.sh)
+   Login (or create surge account) by entering email & password.
+
+          email: miro.adamy@gmail.com
+       password: 
+
+   1661011326958 instinctive-string.surge.sh   18 hours ago   surge   surge.sh   Standard 
+
+```
+
+Added CNAME file for surge
+
+Consider: [Adding custom domain](https://surge.sh/help/adding-a-custom-domain)
+
+We also need to generate surge token `npx surge token`
+
+```sh
+✗ npx surge whoami
+
+   miro.adamy@gmail.com - Student
+```
+
+After pushing the workflow branch, the pull_request action runs (because we have the condition to update) - the `build project` and `deploy to staging` did NOT
+run: <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7938187576?check_suite_focus=true>
+
+I had an error in build, pushed new commit on `workflow` after the PR was closed:
+
+* The PR stays closed, no CI runs
+* need to open new one => <https://github.com/miroadamy-practice/github-actions-demo-1/pull/15>
+* triggers the PR action again => <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2898176741>
+* merge again => <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2898183804>
+* now it worked - <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7938278832?check_suite_focus=true>
+
+test - new branch - `testing-deploy-staging`, change test, push, merge PR
+
+* second attempt (formatting) => <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2898317879>
+* merged => <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2898322726>
+
+Goto https://instinctive-string.surge.sh/
+
+![changed](./img/changed-app-1.png)
 
 ## 05-40 a
 
