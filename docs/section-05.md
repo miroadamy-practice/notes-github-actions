@@ -682,11 +682,44 @@ Cache restored from key: Linux-node-4db6cb19e3209c55595fa8d57848b0d562f090ffba95
 
 In the ^^^ - `npm ci` took 13 sec (50%)
 
-## 05-41 a
+## 05-40 Uploading Artifacts in Our Workflows
 
-zz
+Artifacts: files generated in the workflow
 
-## 05-42 a
+Using GH action - <https://github.com/actions/upload-artifact>
+
+Upload code coverage => <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2899784789>
+
+```sh
+Run actions/upload-artifact@v3
+With the provided path, there will be 14 files uploaded
+Starting artifact upload
+For more detailed logs during the artifact upload process, enable step-debugging: https://docs.github.com/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging#enabling-step-debug-logging
+Artifact name is valid!
+Container for artifact "code-coverage" successfully created. Starting upload of file(s)
+Total size of all the files uploaded is 19201 bytes
+File upload process has finished. Finalizing the artifact upload
+Artifact has been finalized. All files have been successfully uploaded!
+
+The raw size of all the files that were specified for upload is 60087 bytes
+The size of all the files that were uploaded is 19201 bytes. This takes into account any gzip compression used to reduce the upload size, time and storage
+
+Note: The size of downloaded zips can differ significantly from the reported size. For more information see: https://github.com/actions/upload-artifact#zipped-artifact-downloads 
+
+Artifact code-coverage has been successfully uploaded!
+```
+
+We have now artifact in the action - <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2899784789>
+
+![artifact](./img/artifact-1.png)
+
+Upload build => after build => <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2899806865>
+
+![artifact](./img/artifact-2.png)
+
+FYI - We also have `actions/download-artifact`
+
+## 05-41  Semantic Versioning & Conventional Commits
 
 zz
 
