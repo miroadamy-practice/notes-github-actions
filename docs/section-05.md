@@ -721,6 +721,77 @@ FYI - We also have `actions/download-artifact`
 
 ## 05-41  Semantic Versioning & Conventional Commits
 
+When merging to master, we need 3 additional things:
+
+* create release
+* upload to production
+* upload the coverage to code-coverage
+
+=> need automatically generate version number
+
+### Semantic versioning
+
+=> A.B.C == MAJOR.MINOR.PATCH
+
+* Major - increment breaking changes in API
+* Minor - new features - not breaking
+* Patch - fixes, not breaking
+
+See <https://semver.org/>
+
+Which update => `conventional commits` => which was the change
+
+See <https://www.conventionalcommits.org/en/v1.0.0/>
+
+```txt
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+* fix:
+* feat:
+* BREAKING CHANGE:
+* recommended others == build:, chore:, ci:, docs:, style:, refactor:, perf:, test:
+
+See <https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional>
+
+### Examples of messages
+
+```txt
+feat!: send an email to the customer when a product is shipped
+---
+chore!: drop support for Node 6
+
+BREAKING CHANGE: use JavaScript features not available in Node 6.
+---
+feat(lang): add Polish language
+---
+fix: prevent racing of requests
+
+Introduce a request id and a reference to latest request. Dismiss
+incoming responses other than from latest request.
+
+Remove timeouts which were used to mitigate the racing issue but are
+obsolete now.
+
+Reviewed-by: Z
+Refs: #123
+
+```
+
+### Example how it works
+
+* existing version 2.1.3
+* 2 commits
+* commit1 => `feat(auth): added Facebook authentication`
+* commit2 => `fix(auth): fixed authentication
+* => 2.2.0
+
+## 05-42 a
+
 zz
 
 ## 05-43 a
@@ -736,5 +807,9 @@ zz
 zz
 
 ## 05-46 a
+
+zz
+
+## 05-48 a
 
 zz
