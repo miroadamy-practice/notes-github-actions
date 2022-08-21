@@ -576,13 +576,111 @@ test - new branch - `testing-deploy-staging`, change test, push, merge PR
 * second attempt (formatting) => <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2898317879>
 * merged => <https://github.com/miroadamy-practice/github-actions-demo-1/actions/runs/2898322726>
 
-Goto https://instinctive-string.surge.sh/
+Goto <https://instinctive-string.surge.sh/>
 
 ![changed](./img/changed-app-1.png)
 
-## 05-40 a
+The Pipeline so far:
 
-zz
+```yaml
+{% raw %}
+name: CI 
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: use Node 16
+        uses: actions/setup-node@v3
+        with: 
+            node-version: "16"
+      - name: Install dependencies
+        run: |
+          cd react-app
+          npm ci 
+      - name: Check format
+        run: |
+          cd react-app
+          npm run format:check
+      - name: Test
+        run: |
+          cd react-app
+          npm test -- --coverage
+        env:
+          CI: true
+      - name: Build project
+        if: github.event_name == 'push'
+        run: |
+          cd react-app 
+          npm run build
+      - name: Deploy to Staging
+        if: github.event_name == 'push'
+        run: npx surge --project ./react-app/build --domain instinctive-string.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+
+{% endraw %}
+```
+
+## 05-38 Caching NPM Dependencies
+
+See [docs](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
+
+Use `actions/cache` => <https://github.com/actions/cache/blob/main/examples.md#node---npm>
+
+Using key: if dependencies has changed. This is why we use `{% raw %}${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}{% endraw %}`
+
+The restore-key: way how to locate older cache (partial)
+
+First run: <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7938937950?check_suite_focus=true>
+
+```sh
+Run actions/cache@v3
+Cache not found for input keys: Linux-node-4db6cb19e3209c55595fa8d57848b0d562f090ffba954889c82d1fece29e8e81, Linux-node-
+
+....
+
+Post-cache action - added by GHA
+
+Post job cleanup.
+/usr/bin/tar --posix --use-compress-program zstdmt -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/github-actions-demo-1/github-actions-demo-1 --files-from manifest.txt
+Cache Size: ~42 MB (44206882 B)
+Cache saved successfully
+Cache saved with key: Linux-node-4db6cb19e3209c55595fa8d57848b0d562f090ffba954889c82d1fece29e8e81
+```
+
+In the ^^^ - `npm ci` took 26 sec
+
+Let's merge and push:
+
+Did NOT find the cache => different branch !!
+
+```sh
+Run actions/cache@v3
+Cache not found for input keys: Linux-node-4db6cb19e3209c55595fa8d57848b0d562f090ffba954889c82d1fece29e8e81, Linux-node-
+```
+
+Push agains develop: <https://github.com/miroadamy-practice/github-actions-demo-1/runs/7938988403?check_suite_focus=true>
+
+```sh
+Run actions/cache@v3
+Received 37748736 of 50097829 (75.4%), 35.9 MBs/sec
+Received 50097829 of 50097829 (100.0%), 42.5 MBs/sec
+Cache Size: ~48 MB (50097829 B)
+/usr/bin/tar --use-compress-program unzstd -xf /home/runner/work/_temp/ce4a29e2-864c-405b-897a-5a596fb2fead/cache.tzst -P -C /home/runner/work/github-actions-demo-1/github-actions-demo-1
+Cache restored successfully
+
+Cache restored from key: Linux-node-4db6cb19e3209c55595fa8d57848b0d562f090ffba954889c82d1fece29e8e81
+```
+
+In the ^^^ - `npm ci` took 13 sec (50%)
 
 ## 05-41 a
 
