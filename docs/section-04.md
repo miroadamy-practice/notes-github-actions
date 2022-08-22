@@ -469,7 +469,7 @@ Need to get SLACK_WEBHOOK
 
 Create new app - api.slack.com/apps, Create new App, select Incoming Webhooks => allow (was off)
 
-Select `Add new Webhook to an appspace` => `Github Actions` channel => `***REMOVED***`
+Select `Add new Webhook to an appspace` => `Github Actions` channel => `see 1 Password`
 
 
 Cannot use directly => slack will detect
