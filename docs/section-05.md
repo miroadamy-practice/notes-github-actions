@@ -790,13 +790,44 @@ Refs: #123
 * commit2 => `fix(auth): fixed authentication
 * => 2.2.0
 
-## 05-42 a
+## 05-42 Installing Semantic Versioning 
 
-zz
+See <https://github.com/semantic-release/semantic-release>
 
-## 05-43 a
+`npm install --save-dev semantic-release`
+=> `npx semantic-release`
 
-zz
+After installing it (in workflow branch):
+
+```sh
+➜  react-app git:(workflow) ✗ npx semantic-release
+[21:12:00] [semantic-release] › ℹ  Running semantic-release version 19.0.4
+(node:83442) Warning: "version" is a reserved word.
+Please do one of the following:
+- Disable version with `yargs.version(false)` if using "version" as an option
+- Use the built-in `yargs.version` method instead (if applicable)
+- Use a different option key
+https://yargs.js.org/docs/#api-reference-version
+(Use `node --trace-warnings ...` to show where the warning was created)
+[21:12:00] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/npm"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/github"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "analyzeCommits" from "@semantic-release/commit-analyzer"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "generateNotes" from "@semantic-release/release-notes-generator"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "prepare" from "@semantic-release/npm"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/npm"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/github"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/npm"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/github"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "success" from "@semantic-release/github"
+[21:12:00] [semantic-release] › ✔  Loaded plugin "fail" from "@semantic-release/github"
+[21:12:00] [semantic-release] › ⚠  This run was not triggered in a known CI environment, running in dry-run mode.
+[21:12:11] [semantic-release] › ℹ  This test run was triggered on the branch workflow, while semantic-release is configured to only publish from main, therefore a new version won’t be published.
+
+```
+
+## 05-43 Running Semantic Release in Our project
+
+xx
 
 ## 05-44 a
 
