@@ -790,7 +790,7 @@ Refs: #123
 * commit2 => `fix(auth): fixed authentication
 * => 2.2.0
 
-## 05-42 Installing Semantic Versioning 
+## 05-42 Installing Semantic Versioning
 
 See <https://github.com/semantic-release/semantic-release>
 
@@ -827,9 +827,479 @@ https://yargs.js.org/docs/#api-reference-version
 
 ## 05-43 Running Semantic Release in Our project
 
-xx
+Added to pipeline
 
-## 05-44 a
+```yaml
+{% raw %}
+      - name: Create a release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          cd react-app
+          npx semantic-release
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+{%% endraw %}
+```
+
+Push and PR to merge to main
+
+First run failed:
+
+```sh
+[7:57:39 PM] [semantic-release] › ℹ  Running semantic-release version 19.0.4
+(node:1898) Warning: "version" is a reserved word.
+Please do one of the following:
+- Disable version with `yargs.version(false)` if using "version" as an option
+- Use the built-in `yargs.version` method instead (if applicable)
+- Use a different option key
+https://yargs.js.org/docs/#api-reference-version
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/npm"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/github"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "analyzeCommits" from "@semantic-release/commit-analyzer"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "generateNotes" from "@semantic-release/release-notes-generator"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "prepare" from "@semantic-release/npm"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/npm"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/github"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/npm"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/github"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "success" from "@semantic-release/github"
+[7:57:39 PM] [semantic-release] › ✔  Loaded plugin "fail" from "@semantic-release/github"
+[7:57:41 PM] [semantic-release] › ✔  Run automated release from branch main on repository https://github.com/miroadamy-practice/github-actions-demo-1
+[7:57:41 PM] [semantic-release] › ✔  Allowed to push to the Git repository
+[7:57:41 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/npm"
+[7:57:41 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/npm"
+[7:57:41 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/github"
+[7:57:41 PM] [semantic-release] [@semantic-release/github] › ℹ  Verify GitHub authentication (https://api.github.com)
+[7:57:41 PM] [semantic-release] › ✖  Failed step "verifyConditions" of plugin "@semantic-release/github"
+[7:57:41 PM] [semantic-release] › ℹ  Start step "fail" of plugin "@semantic-release/github"
+[7:57:41 PM] [semantic-release] [@semantic-release/github] › ℹ  Verify GitHub authentication (https://api.github.com)
+[7:57:41 PM] [semantic-release] › ✖  Failed step "fail" of plugin "@semantic-release/github"
+[7:57:41 PM] [semantic-release] › ✖  ENOGHTOKEN No GitHub token specified.
+A GitHub personal token (https://github.com/semantic-release/github/blob/master/README.md#github-authentication) must be created and set in the GH_TOKEN or GITHUB_TOKEN environment variable on your CI environment.
+
+Please make sure to create a GitHub personal token (https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line) and to set it in the GH_TOKEN or GITHUB_TOKEN environment variable on your CI environment. The token must allow to push to the repository miroadamy-practice/github-actions-demo-1.
+
+[7:57:41 PM] [semantic-release] › ✖  ENOGHTOKEN No GitHub token specified.
+A GitHub personal token (https://github.com/semantic-release/github/blob/master/README.md#github-authentication) must be created and set in the GH_TOKEN or GITHUB_TOKEN environment variable on your CI environment.
+
+Please make sure to create a GitHub personal token (https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line) and to set it in the GH_TOKEN or GITHUB_TOKEN environment variable on your CI environment. The token must allow to push to the repository miroadamy-practice/github-actions-demo-1.
+
+AggregateError: 
+    SemanticReleaseError: No GitHub token specified.
+        at module.exports (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/@semantic-release/github/lib/get-error.js:6:10)
+        at module.exports (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/@semantic-release/github/lib/verify.js:97:17)
+        at verifyConditions (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/@semantic-release/github/index.js:27:9)
+        at validator (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/lib/plugins/normalize.js:34:30)
+        at /home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/lib/plugins/pipeline.js:37:40
+        at next (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/p-reduce/index.js:17:9)
+    at /home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/lib/plugins/pipeline.js:54:11
+    at async Object.pluginsConf.<computed> [as verifyConditions] (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/lib/plugins/index.js:80:11)
+    at async run (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/index.js:103:3)
+    at async module.exports (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/index.js:269:22)
+    at async module.exports (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/cli.js:55:5)
+Error: Process completed with exit code 1.
+```
+
+Tried: (note the alignment)
+
+```yaml
+{% raw %}
+      - name: Create a release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          cd react-app
+          npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+{%% endraw %}
+```
+
+```sh
+Run cd react-app
+[8:11:56 PM] [semantic-release] › ℹ  Running semantic-release version 19.0.4
+(node:1834) Warning: "version" is a reserved word.
+Please do one of the following:
+- Disable version with `yargs.version(false)` if using "version" as an option
+- Use the built-in `yargs.version` method instead (if applicable)
+- Use a different option key
+https://yargs.js.org/docs/#api-reference-version
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/npm"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/github"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "analyzeCommits" from "@semantic-release/commit-analyzer"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "generateNotes" from "@semantic-release/release-notes-generator"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "prepare" from "@semantic-release/npm"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/npm"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/github"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/npm"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/github"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "success" from "@semantic-release/github"
+[8:11:56 PM] [semantic-release] › ✔  Loaded plugin "fail" from "@semantic-release/github"
+[8:11:59 PM] [semantic-release] › ✔  Run automated release from branch main on repository https://github.com/miroadamy-practice/github-actions-demo-1
+[8:12:01 PM] [semantic-release] › ✔  Allowed to push to the Git repository
+[8:12:01 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/npm"
+[8:12:01 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/npm"
+[8:12:01 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/github"
+[8:12:01 PM] [semantic-release] [@semantic-release/github] › ℹ  Verify GitHub authentication (https://api.github.com)
+[8:12:01 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/github"
+[8:12:01 PM] [semantic-release] › ℹ  Found git tag v0.1.0 associated with version 0.1.0 on branch main
+[8:12:01 PM] [semantic-release] › ℹ  Found 84 commits since last release
+[8:12:01 PM] [semantic-release] › ℹ  Start step "analyzeCommits" of plugin "@semantic-release/commit-analyzer"
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #20 from miroadamy-practice/workflow
+
+Workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge branch 'main' into workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix: Different alignment
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix: using github.token
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #19 from miroadamy-practice/workflow
+
+Workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix: corrected formatting
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: feat: added semantic-release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is minor
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix: added the semantic versioning config
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Installed semantic versioning
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #18 from miroadamy-practice/workflow
+
+Added artifact upload
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Upload build only after there is a build
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Same typo twice
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Typo in action name
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Added artifact upload
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Push against develop
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #17 from miroadamy-practice/workflow
+
+Adding caching to workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge commit 'decf9dbb177123060877a02666643436e6df6147' into workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: YAML fix
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge branch 'develop' into workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Adding caching to workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #16 from miroadamy-practice/testing-deploy-staging
+
+Demo change
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Reformated
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Demo change
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #15 from miroadamy-practice/workflow
+
+Fixes in workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Fixes in workflow
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #13 from miroadamy-practice/workflow
+
+PR to Develop - testing merge - First
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Adding workflow for merge
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Fix: npm run
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Fix - Node version
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: PR to Develop
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge remote-tracking branch 'origin/chapter/04-29'
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Added CodeOwners
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Can I push to develop ?
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Removed the previous workflow files
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Add format code
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: package.json
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: npm script for formatting
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: After prettier run with 2 spaces
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Added Prettier
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Fix in gitpod
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Generated react-app
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Updated action text + added secret
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Sending slack message
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #10 from miroadamy-practice:chapter/04-28
+
+Trying script in and out of Docker
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Trying script in and out of Docker
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #9 from miroadamy-practice/chapter/04-27
+
+Steps with containers
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Steps with containers
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #8 from miroadamy-practice/chapter/04-26
+
+test multi-container
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: test multi-container
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #7 from miroadamy-practice/chapter/04-24
+
+base container
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Compare with plain job
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Lowercase, of course
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: base container
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #6 from miroadamy-practice/chapter/04-20
+
+Setup node - simple
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Include and exclude
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Also log in matrix
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Also run dump context
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Using strategy
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: lowercase @v3
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Correct parameters: @v3, version14
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Setup node - simple
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge commit 'ee110399f6a67633bc8747d13348e203d11ad91d'
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Demo using functions
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #5 from miroadamy-practice/chapter/03-17
+
+Log contexts
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Log contexts
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Random file
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: No master, main
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Update repo
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Limit the trigger
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge commit '59a629dd898945511f096be870ebe9b3e8988ad6'
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Create issue programatically
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #3 from miroadamy-practice/chapter/03-13
+
+env-vars 03-13
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: env-vars 03-13
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Fix - must be string
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Showing payload
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Using dispatch
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Schedules off
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: CHANGED to */15 and 0/20 to see over longer time
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Another change - schedule only, 2 cron expressions, */5 and 0/3
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Changed quoting
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: The 0/5 never triggered, back to */5
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Changed to 0/5 from */5
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Fix the expression
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: testing cron
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:12:01 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analysis of 84 commits complete: minor release
+[8:12:01 PM] [semantic-release] › ✔  Completed step "analyzeCommits" of plugin "@semantic-release/commit-analyzer"
+[8:12:01 PM] [semantic-release] › ℹ  The next release version is 0.2.0
+[8:12:01 PM] [semantic-release] › ℹ  Start step "generateNotes" of plugin "@semantic-release/release-notes-generator"
+[8:12:01 PM] [semantic-release] › ✔  Completed step "generateNotes" of plugin "@semantic-release/release-notes-generator"
+[8:12:01 PM] [semantic-release] › ℹ  Start step "prepare" of plugin "@semantic-release/npm"
+[8:12:01 PM] [semantic-release] [@semantic-release/npm] › ℹ  Write version 0.2.0 to package.json in /home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app
+v0.2.0
+[8:12:02 PM] [semantic-release] › ✔  Completed step "prepare" of plugin "@semantic-release/npm"
+[8:12:04 PM] [semantic-release] › ✔  Created tag v0.2.0
+[8:12:04 PM] [semantic-release] › ℹ  Start step "publish" of plugin "@semantic-release/npm"
+[8:12:04 PM] [semantic-release] [@semantic-release/npm] › ℹ  Skip publishing to npm registry as package.json's private property is true
+[8:12:04 PM] [semantic-release] › ✔  Completed step "publish" of plugin "@semantic-release/npm"
+[8:12:04 PM] [semantic-release] › ℹ  Start step "publish" of plugin "@semantic-release/github"
+[8:12:05 PM] [semantic-release] [@semantic-release/github] › ℹ  Published GitHub release: https://github.com/miroadamy-practice/github-actions-demo-1/releases/tag/v0.2.0
+[8:12:05 PM] [semantic-release] › ✔  Completed step "publish" of plugin "@semantic-release/github"
+[8:12:05 PM] [semantic-release] › ℹ  Start step "success" of plugin "@semantic-release/github"
+[8:13:07 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #20: https://github.com/miroadamy-practice/github-actions-demo-1/pull/20#issuecomment-1222914960
+[8:13:10 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #19: https://github.com/miroadamy-practice/github-actions-demo-1/pull/19#issuecomment-1222915077
+[8:13:13 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #18: https://github.com/miroadamy-practice/github-actions-demo-1/pull/18#issuecomment-1222915219
+[8:13:16 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #17: https://github.com/miroadamy-practice/github-actions-demo-1/pull/17#issuecomment-1222915351
+[8:13:19 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #16: https://github.com/miroadamy-practice/github-actions-demo-1/pull/16#issuecomment-1222915476
+[8:13:22 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #15: https://github.com/miroadamy-practice/github-actions-demo-1/pull/15#issuecomment-1222915583
+[8:13:25 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #13: https://github.com/miroadamy-practice/github-actions-demo-1/pull/13#issuecomment-1222915708
+[8:13:28 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #12: https://github.com/miroadamy-practice/github-actions-demo-1/pull/12#issuecomment-1222915832
+[8:13:31 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #11: https://github.com/miroadamy-practice/github-actions-demo-1/pull/11#issuecomment-1222915942
+[8:13:34 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #10: https://github.com/miroadamy-practice/github-actions-demo-1/pull/10#issuecomment-1222916065
+[8:13:37 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #9: https://github.com/miroadamy-practice/github-actions-demo-1/pull/9#issuecomment-1222916161
+[8:13:40 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #8: https://github.com/miroadamy-practice/github-actions-demo-1/pull/8#issuecomment-1222916267
+[8:13:43 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #7: https://github.com/miroadamy-practice/github-actions-demo-1/pull/7#issuecomment-1222916438
+[8:13:46 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #6: https://github.com/miroadamy-practice/github-actions-demo-1/pull/6#issuecomment-1222916563
+[8:13:49 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #5: https://github.com/miroadamy-practice/github-actions-demo-1/pull/5#issuecomment-1222916712
+[8:13:52 PM] [semantic-release] [@semantic-release/github] › ℹ  Added comment to issue #3: https://github.com/miroadamy-practice/github-actions-demo-1/pull/3#issuecomment-1222916838
+[8:13:55 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #20
+[8:13:59 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #19
+[8:14:01 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #18
+[8:14:04 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #17
+[8:14:08 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #16
+[8:14:10 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #15
+[8:14:13 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #13
+[8:14:16 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #12
+[8:14:19 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #11
+[8:14:22 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #10
+[8:14:25 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #9
+[8:14:28 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #8
+[8:14:31 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #7
+[8:14:34 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #6
+[8:14:37 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #5
+[8:14:40 PM] [semantic-release] [@semantic-release/github] › ℹ  Added labels [ 'released' ] to issue #3
+[8:14:40 PM] [semantic-release] › ✖  Failed step "success" of plugin "@semantic-release/github"
+[8:14:40 PM] [semantic-release] › ✖  An error occurred while running semantic-release: RequestError [HttpError]: You have exceeded a secondary rate limit. Please wait a few minutes before you try again.
+    at /home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/@octokit/request/dist-node/index.js:88:21
+    at processTicksAndRejections (node:internal/process/task_queues:96:5) {
+  status: 403,
+  response: {
+    url: 'https://api.github.com/search/issues?q=in%3Atitle+repo%3Amiroadamy-practice%2Fgithub-actions-demo-1+type%3Aissue+state%3Aopen+The%20automated%20release%20is%20failing%20%F0%9F%9A%A8',
+    status: 403,
+    headers: {
+      'access-control-allow-origin': '*',
+      'access-control-expose-headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset',
+      connection: 'close',
+      'content-encoding': 'gzip',
+      'content-security-policy': "default-src 'none'",
+      'content-type': 'application/json; charset=utf-8',
+      date: 'Mon, 22 Aug 2022 20:14:40 GMT',
+      'referrer-policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+      server: 'GitHub.com',
+      'strict-transport-security': 'max-age=31536000; includeSubdomains; preload',
+      'transfer-encoding': 'chunked',
+      vary: 'Accept-Encoding, Accept, X-Requested-With',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'deny',
+      'x-github-media-type': 'github.v3; format=json',
+      'x-github-request-id': '04C4:0419:4D915F4:4FCEDC0:6303E3B0',
+      'x-ratelimit-limit': '30',
+      'x-ratelimit-remaining': '29',
+      'x-ratelimit-reset': '1661199340',
+      'x-ratelimit-resource': 'search',
+      'x-ratelimit-used': '1',
+      'x-xss-protection': '0'
+    },
+    data: {
+      documentation_url: 'https://docs.github.com/en/free-pro-team@latest/rest/overview/resources-in-the-rest-api#secondary-rate-limits',
+      message: 'You have exceeded a secondary rate limit. Please wait a few minutes before you try again.'
+    }
+  },
+  request: {
+    method: 'GET',
+    url: 'https://api.github.com/search/issues?q=in%3Atitle+repo%3Amiroadamy-practice%2Fgithub-actions-demo-1+type%3Aissue+state%3Aopen+The%20automated%20release%20is%20failing%20%F0%9F%9A%A8',
+    headers: {
+      accept: 'application/vnd.github.v3+json',
+      'user-agent': 'octokit-rest.js/19.0.4 octokit-core.js/4.0.5 Node.js/16.16.0 (linux; x64)',
+      authorization: 'token [REDACTED]'
+    },
+    request: { agent: undefined, hook: [Function: bound bound register] }
+  },
+  pluginName: '@semantic-release/github'
+}
+AggregateError: 
+    HttpError: You have exceeded a secondary rate limit. Please wait a few minutes before you try again.
+        at /home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/@octokit/request/dist-node/index.js:88:21
+        at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at /home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/lib/plugins/pipeline.js:54:11
+    at async Object.pluginsConf.<computed> [as success] (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/lib/plugins/index.js:80:11)
+    at async run (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/index.js:209:3)
+    at async module.exports (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/index.js:269:22)
+    at async module.exports (/home/runner/work/github-actions-demo-1/github-actions-demo-1/react-app/node_modules/semantic-release/cli.js:55:5)
+Error: Process completed with exit code 1.
+```
+
+Functioned OK on re-run
+
+```sh
+[8:19:40 PM] [semantic-release] › ℹ  Running semantic-release version 19.0.4
+(node:1870) Warning: "version" is a reserved word.
+Please do one of the following:
+- Disable version with `yargs.version(false)` if using "version" as an option
+- Use the built-in `yargs.version` method instead (if applicable)
+- Use a different option key
+https://yargs.js.org/docs/#api-reference-version
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/npm"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/github"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "analyzeCommits" from "@semantic-release/commit-analyzer"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "generateNotes" from "@semantic-release/release-notes-generator"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "prepare" from "@semantic-release/npm"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/npm"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/github"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/npm"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/github"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "success" from "@semantic-release/github"
+[8:19:40 PM] [semantic-release] › ✔  Loaded plugin "fail" from "@semantic-release/github"
+[8:19:44 PM] [semantic-release] › ✔  Run automated release from branch main on repository https://github.com/miroadamy-practice/github-actions-demo-1
+[8:19:44 PM] [semantic-release] › ✔  Allowed to push to the Git repository
+[8:19:44 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/npm"
+[8:19:44 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/npm"
+[8:19:44 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/github"
+[8:19:44 PM] [semantic-release] [@semantic-release/github] › ℹ  Verify GitHub authentication (https://api.github.com)
+[8:19:44 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/github"
+[8:19:44 PM] [semantic-release] › ℹ  Found git tag v0.2.0 associated with version 0.2.0 on branch main
+[8:19:44 PM] [semantic-release] › ℹ  Found 0 commits since last release
+[8:19:44 PM] [semantic-release] › ℹ  Start step "analyzeCommits" of plugin "@semantic-release/commit-analyzer"
+[8:19:44 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analysis of 0 commits complete: no release
+[8:19:44 PM] [semantic-release] › ✔  Completed step "analyzeCommits" of plugin "@semantic-release/commit-analyzer"
+[8:19:44 PM] [semantic-release] › ℹ  There are no relevant changes, so no new version is released.
+```
+
+![released](./img/released.png)
+
+Note that the PRs are labelled and the comment gets written
+
+![released](./img/released-2.png)
+![released](./img/released-3.png)
+
+## 05-44 Uploading Release Assets
+
 
 zz
 
