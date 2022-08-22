@@ -1300,9 +1300,53 @@ Note that the PRs are labelled and the comment gets written
 
 ## 05-44 Uploading Release Assets
 
+Github plugin can have option to upload files
 
-zz
+Changes in release.config :
 
+```js
+{% raw %}
+module.exports = {
+  branches: 'main',
+  repositoryUrl: 'https://github.com/miroadamy-practice/github-actions-demo-1',
+  plugins: [
+    '@semantic-release/commit-analyzer',
+    '@semantic-release/release-notes-generator',
+    [
+      '@semantic-release/github',
+      {
+        assets: [
+          { path: 'build.zip', label: 'Build' },
+          { path: 'coverage.zip', label: 'Coverage' },
+        ],
+      },
+    ],
+  ],
+};
+{% endraw %}
+```
+
+also the CI
+
+```yaml
+{% raw %}
+      - name: ZIP Assets 
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          cd react-app
+          zip -r build.zip ./build
+          zip -r coverage.zip ./coverage
+      - name: Create a release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          cd react-app
+          npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+{% endraw %}
+
+```
 ## 05-45 a
 
 zz
