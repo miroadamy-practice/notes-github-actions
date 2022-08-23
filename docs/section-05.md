@@ -1347,14 +1347,55 @@ also the CI
 {% endraw %}
 
 ```
-## 05-45 a
 
-zz
+## 05-45 Deploying to Production when Pushing to Master
 
-## 05-46 a
+On deploy to prod, push to prod
 
-zz
+I skipped this, do not care for codecoverage uploads
+## 05-48 Validating Our Commit Messages with Commitlint & Commitizen
 
-## 05-48 a
+Commitlint - validate if message satisfies the contstraint:
+
+See [commitlint - Lint commit messages](https://commitlint.js.org/#/) + [repo](https://github.com/conventional-changelog/commitlint)
+
+Installation:
+
+`npm install --save-dev @commitlint/config-conventional @commitlint/cli husky`
+
+Create config file and modify package.json:
+
+`echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js`
+
+```json
+  ...
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "format:check": "prettier --check \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\""
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  ...
+```
+
+Does not seem to work, not sure why
+
+Skipping commitizn
+## 05-49 Sending a Slack Message When a New Release is Published
+
+
 
 zz
