@@ -1396,6 +1396,18 @@ Does not seem to work, not sure why
 Skipping commitizn
 ## 05-49 Sending a Slack Message When a New Release is Published
 
+Send slack message when release is created
+
+Creating release => triggers even release
+
+Used the code from [section 04](./section-04.md)
+
+The action does not trigger - we use the secrets.GITHUB_TOKEN which is `github_action` user. This used does NOT trigger the
+release event ! You cannot trigger workflow from another workflow
+
+We need own PAT => ORG secret, MY_TOKEN
+
+=> use PAT 
 
 
 zz
