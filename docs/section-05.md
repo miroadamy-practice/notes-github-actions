@@ -1413,3 +1413,8 @@ We need own PAT => ORG secret, MY_TOKEN
 It did not work, looks like I have deleted the Webhook
 
 Added new one
+
+## 05-50 Opening an Automated Issue when the Workflow Fails
+
+Add new step in CI
+
