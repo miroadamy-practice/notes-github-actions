@@ -30,7 +30,7 @@ In section 4 we will see how can we setup matrices, a matrix is a way to run a j
 
 In section 5 we will finally use our knowledge to create a more real-world CI/CD example. We will set-up a repository where we have a web app and we need to have a flow for production and development deployment. So we will have 2 branches, 1 for production and another for development and we will write a workflow for each one of these branches to do certain things. These things will differ depending whether we are pushing on production or development branch. We will also have a workflow that will run if someone opened a pull request. The tasks we will perform includes: installing dependencies, caching, testing, checking code format, uploading artifacts, automatically generating a semantic version, deploying to production/staging, creating releases, opening issues, sending slack notifications and more.
 
-### [Section-6 -](./section-06.md)
+### [Section-6 - Creating your own Github Actions](./section-06.md)
 
 During the course we will use some actions that are available in the marketplace. In this section we will learn how to create our own actions. Actions can be created using JavaScript or using Docker. In this section we are going to learn about both ways and then we will create a JavaScript action that opens GitHub issues and a docker action that send a slack message which we will write using PHP.
 

@@ -13,6 +13,7 @@ nav:
         - 03 - Env variables, Encryption: section-03.md
         - 04 - Using Strategy, Matrix and Docker: section-04.md
         - 05 - CI/CD Workflow to automate test and deployment: section-05.md
+        - 06 - Creating own Github Actions: section-06.md
     - Demo:
         - Markdown: markdown-demo.md
         - Macros: macros-demo1.md
