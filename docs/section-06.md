@@ -453,7 +453,197 @@ Note that:
 
 ## 06-56 - Creating a JavaScript Action for Opening Github Issues
 
-aaa
+See <https://octokit.github.io/rest.js/v18>
+
+We need: token for authentication, title, body and assignees
+
+in actions/issue/ => action.yml
+
+### **github-actions-demo-1/.github/actions/issue/action.yml**
+
+```yaml
+name: "Open Github Issue"
+author: miroadamy
+description: "Opens a github issue"
+inputs:
+  token:
+    description: "Github Token"
+    required: true
+  title:
+    description: "Issue Title"
+    required: true
+  body:
+    description: "Issue Body"
+  assignees:
+    description: "Issue Assignees"
+outputs:
+  issue: # id of output
+    description: "The issue object as a json string"
+runs:
+  using: "node16"
+  main: "dist/index.js"
+```
+
+### **github-actions-demo-1/.github/actions/issue/index.js**
+
+```js
+const core = require("@actions/core");
+const github = require("@actions/github");
+
+async function run() {
+  try {
+    const token = core.getInput("token");
+    const title = core.getInput("title");
+    const body = core.getInput("body");
+    const assignees = core.getInput("assignees");
+
+    const octokit = new github.GitHub(token);
+
+    const response = await octokit.issues.create({
+      // owner: github.context.repo.owner,
+      // repo: github.context.repo.repo,
+      ...github.context.repo,
+      title,
+      body,
+      assignees: assignees ? assignees.split("\n") : undefined
+    });
+
+    core.setOutput("issue", JSON.stringify(response.data));
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+}
+
+run();
+```
+
+Octokit client lives in github.
+
+The syntax above is ES6, instead of
+
+```js
+
+const response = await octokit.issues.create({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      title: title,
+      body: body,
+      assignees: assignees ? assignees.split("\n") : undefined
+    });
+
+```
+
+we explode github.context.repo object
+
+The assignees => pass as multi-line string with |
+
+Must install and pack:
+
+```sh
+ hello git:(custom-action-1) ✗ cd ../issue 
+
+➜  issue git:(custom-action-1) ✗  npm install @actions/core --save  
+
+added 4 packages, and audited 5 packages in 2s
+
+found 0 vulnerabilities
+
+➜  issue git:(custom-action-1) ✗  npm install @actions/github --save  
+
+added 21 packages, and audited 26 packages in 2s
+
+found 0 vulnerabilities
+
+➜  issue git:(custom-action-1) ✗ npm install -D @zeit/ncc
+npm WARN deprecated @zeit/ncc@0.22.3: @zeit/ncc is no longer maintained. Please use @vercel/ncc instead.
+
+added 1 package, and audited 27 packages in 2s
+
+found 0 vulnerabilities
+
+
+➜  issue git:(custom-action-1) ✗ npx ncc build index.js -o dist
+ncc: Version 0.22.3
+ncc: Compiling file index.js
+574kB  dist/index.js
+574kB  [928ms] - ncc 0.22.3
+```
+
+### Using the action
+
+The caller:
+
+```yml
+name: Test custom workflow
+on:
+  push:
+    branches:
+      - "custom-action*"
+
+jobs:
+  invoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: issue test
+        id: issuetest
+        uses: ./.github/actions/issue
+        with:
+          token: {{ secrets.GITHUB_TOKEN }}
+          title: Issue Title
+          body: |
+            This is body
+            for the test issue
+          assignees: |
+            miroadamy
+      - run: |
+            echo ${{ steps.issuetest.outputs.issue}}
+
+```
+
+The course code fails:
+
+```txt
+##[debug]Loading env
+Run ./.github/actions/issue
+Error: github.GitHub is not a constructor
+##[debug]Node Action run completed with exit code 1
+##[debug]Finishing: issue test
+```
+
+Should be `const octokit = new github.Octokit(token);`
+
+Also `const response = await octokit.rest.issues.create({`
+
+Must use await => this forces code to be inside async function. This is why run()
+
+Finally:
+
+```txt
+
+##[debug]Result: '***'
+##[debug]Loading env
+Run ./.github/actions/issue
+  with:
+    token: ***
+    title: Issue Title
+    body: This is body
+  for the test issue
+  
+    assignees: miroadamy
+  
+  env:
+    HELLO: Hola!
+
+::set-output name=issue::{"url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27","repository_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1","labels_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/labels{/name}","comments_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/comments","events_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/events","html_url":"https://github.com/miroadamy-practice/github-actions-demo-1/issues/27","id":1357764730,"node_id":"I_kwDOHwbtK85Q7dh6","number":27,"title":"Issue Title","user":{"login":"github-actions[bot]","id":41898282,"node_id":"MDM6Qm90NDE4OTgyODI=","avatar_url":"https://avatars.githubusercontent.com/in/15368?v=4","gravatar_id":"","url":"https://api.github.com/users/github-actions%255Bbot%255D","html_url":"https://github.com/apps/github-actions","followers_url":"https://api.github.com/users/github-actions%255Bbot%255D/followers","following_url":"https://api.github.com/users/github-actions%255Bbot%255D/following{/other_user}","gists_url":"https://api.github.com/users/github-actions%255Bbot%255D/gists{/gist_id}","starred_url":"https://api.github.com/users/github-actions%255Bbot%255D/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/github-actions%255Bbot%255D/subscriptions","organizations_url":"https://api.github.com/users/github-actions%255Bbot%255D/orgs","repos_url":"https://api.github.com/users/github-actions%255Bbot%255D/repos","events_url":"https://api.github.com/users/github-actions%255Bbot%255D/events{/privacy}","received_events_url":"https://api.github.com/users/github-actions%255Bbot%255D/received_events","type":"Bot","site_admin":false},"labels":[],"state":"open","locked":false,"assignee":{"login":"miroadamy","id":461826,"node_id":"MDQ6VXNlcjQ2MTgyNg==","avatar_url":"https://avatars.githubusercontent.com/u/461826?v=4","gravatar_id":"","url":"https://api.github.com/users/miroadamy","html_url":"https://github.com/miroadamy","followers_url":"https://api.github.com/users/miroadamy/followers","following_url":"https://api.github.com/users/miroadamy/following{/other_user}","gists_url":"https://api.github.com/users/miroadamy/gists{/gist_id}","starred_url":"https://api.github.com/users/miroadamy/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/miroadamy/subscriptions","organizations_url":"https://api.github.com/users/miroadamy/orgs","repos_url":"https://api.github.com/users/miroadamy/repos","events_url":"https://api.github.com/users/miroadamy/events{/privacy}","received_events_url":"https://api.github.com/users/miroadamy/received_events","type":"User","site_admin":false},"assignees":[{"login":"miroadamy","id":461826,"node_id":"MDQ6VXNlcjQ2MTgyNg==","avatar_url":"https://avatars.githubusercontent.com/u/461826?v=4","gravatar_id":"","url":"https://api.github.com/users/miroadamy","html_url":"https://github.com/miroadamy","followers_url":"https://api.github.com/users/miroadamy/followers","following_url":"https://api.github.com/users/miroadamy/following{/other_user}","gists_url":"https://api.github.com/users/miroadamy/gists{/gist_id}","starred_url":"https://api.github.com/users/miroadamy/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/miroadamy/subscriptions","organizations_url":"https://api.github.com/users/miroadamy/orgs","repos_url":"https://api.github.com/users/miroadamy/repos","events_url":"https://api.github.com/users/miroadamy/events{/privacy}","received_events_url":"https://api.github.com/users/miroadamy/received_events","type":"User","site_admin":false}],"milestone":null,"comments":0,"created_at":"2022-08-31T19:24:59Z","updated_at":"2022-08-31T19:25:00Z","closed_at":null,"author_association":"NONE","active_lock_reason":null,"body":"This is body\nfor the test issue","closed_by":null,"reactions":{"url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"timeline_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/timeline","performed_via_github_app":null,"state_reason":null}
+##[debug]steps.issuetest.outputs.issue='{"url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27","repository_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1","labels_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/labels{/name}","comments_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/comments","events_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/events","html_url":"https://github.com/miroadamy-practice/github-actions-demo-1/issues/27","id":1357764730,"node_id":"I_kwDOHwbtK85Q7dh6","number":27,"title":"Issue Title","user":{"login":"github-actions[bot]","id":41898282,"node_id":"MDM6Qm90NDE4OTgyODI=","avatar_url":"https://avatars.githubusercontent.com/in/15368?v=4","gravatar_id":"","url":"https://api.github.com/users/github-actions%5Bbot%5D","html_url":"https://github.com/apps/github-actions","followers_url":"https://api.github.com/users/github-actions%5Bbot%5D/followers","following_url":"https://api.github.com/users/github-actions%5Bbot%5D/following{/other_user}","gists_url":"https://api.github.com/users/github-actions%5Bbot%5D/gists{/gist_id}","starred_url":"https://api.github.com/users/github-actions%5Bbot%5D/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/github-actions%5Bbot%5D/subscriptions","organizations_url":"https://api.github.com/users/github-actions%5Bbot%5D/orgs","repos_url":"https://api.github.com/users/github-actions%5Bbot%5D/repos","events_url":"https://api.github.com/users/github-actions%5Bbot%5D/events{/privacy}","received_events_url":"https://api.github.com/users/github-actions%5Bbot%5D/received_events","type":"Bot","site_admin":false},"labels":[],"state":"open","locked":false,"assignee":{"login":"miroadamy","id":461826,"node_id":"MDQ6VXNlcjQ2MTgyNg==","avatar_url":"https://avatars.githubusercontent.com/u/461826?v=4","gravatar_id":"","url":"https://api.github.com/users/miroadamy","html_url":"https://github.com/miroadamy","followers_url":"https://api.github.com/users/miroadamy/followers","following_url":"https://api.github.com/users/miroadamy/following{/other_user}","gists_url":"https://api.github.com/users/miroadamy/gists{/gist_id}","starred_url":"https://api.github.com/users/miroadamy/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/miroadamy/subscriptions","organizations_url":"https://api.github.com/users/miroadamy/orgs","repos_url":"https://api.github.com/users/miroadamy/repos","events_url":"https://api.github.com/users/miroadamy/events{/privacy}","received_events_url":"https://api.github.com/users/miroadamy/received_events","type":"User","site_admin":false},"assignees":[{"login":"miroadamy","id":461826,"node_id":"MDQ6VXNlcjQ2MTgyNg==","avatar_url":"https://avatars.githubusercontent.com/u/461826?v=4","gravatar_id":"","url":"https://api.github.com/users/miroadamy","html_url":"https://github.com/miroadamy","followers_url":"https://api.github.com/users/miroadamy/followers","following_url":"https://api.github.com/users/miroadamy/following{/other_user}","gists_url":"https://api.github.com/users/miroadamy/gists{/gist_id}","starred_url":"https://api.github.com/users/miroadamy/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/miroadamy/subscriptions","organizations_url":"https://api.github.com/users/miroadamy/orgs","repos_url":"https://api.github.com/users/miroadamy/repos","events_url":"https://api.github.com/users/miroadamy/events{/privacy}","received_events_url":"https://api.github.com/users/miroadamy/received_events","type":"User","site_admin":false}],"milestone":null,"comments":0,"created_at":"2022-08-31T19:24:59Z","updated_at":"2022-08-31T19:25:00Z","closed_at":null,"author_association":"NONE","active_lock_reason":null,"body":"This is body\nfor the test issue","closed_by":null,"reactions":{"url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"timeline_url":"https://api.github.com/repos/miroadamy-practice/github-actions-demo-1/issues/27/timeline","performed_via_github_app":null,"state_reason":null}'
+##[debug]Node Action run completed with exit code 0
+##[debug]Finishing: issue test
+```
+
+Issue is created:
+
+![issue](./img/created-issue-1.png)
 
 ## 06-57 - Creating simple Docker Action
 
