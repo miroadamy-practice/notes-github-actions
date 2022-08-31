@@ -450,3 +450,27 @@ Note that:
 * name is not logged
 * Logging is collapsed for github
 * the value of $HELLO is displayed
+
+## 06-56 - Creating a JavaScript Action for Opening Github Issues
+
+aaa
+
+## 06-57 - Creating simple Docker Action
+
+aa
+
+## 06-59 - Creating a PHP Script for Sending a Slack Message
+
+qa
+
+## 06-60 - Running our PHP Script using a Docker Action
+
+aa
+
+## 06-61 - Populating our Inputs and Context Information Using Environment Variables
+
+aaa
+
+## 06-62 - Publishing Github Actions into the Marketplace
+
+aa
