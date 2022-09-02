@@ -647,8 +647,91 @@ Issue is created:
 
 ## 06-57 - Creating simple Docker Action
 
-aa
+See [also this doc](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions)
 
+Docker actions run in Docker container. => slower but more flexible
+
+Recreate greeting using Docker
+
+Folder `hello-docker`
+
+Difference
+
+```yml
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env: 
+    keyvaluename: valuevalue
+
+```
+
+We can refer to an image - `docker:/...` or docker file
+
+Can use the env variables
+
+Can define the entrypoint
+
+We use Dockerfile
+
+```docker
+FROM alpine:3.11
+
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+# CMD ['iwojd']
+
+```
+
+and entrypoint.sh
+
+```sh
+
+#!/bin/sh -l
+
+if [ true ]
+then
+  echo 'error'
+  exit 1
+fi
+
+echo "::debug ::Debug Message"
+echo "::warning ::Warning Message"
+echo "::error ::Error Message"
+
+echo "::add-mask::$1"
+echo "Hello $1"
+time=$(date)
+echo "::set-output name=time::$time"
+
+echo "::group::Some expandable logs"
+echo 'some stuff'
+echo 'some stuff'
+echo 'some stuff'
+echo '::endgroup::'
+
+echo '::set-env name=HELLO::hello'
+```
+
+Syntax to communicate with error, warning etc from shell: use special syntax
+
+`echo "::debug ::Debug Message"`
+
+works also in Python => print('::debug ::Debug Python')
+
+Secret => `::add-mask::`
+
+Syntax for setting outputs: `echo "::set-output name=time::$time`
+
+Issue - oproti kurzu:
+
+```
+::set-env name=HELLO::olala
+Error: Unable to process command '::set-env name=HELLO::olala' successfully.
+Error: The `set-env` command is disabled. Please upgrade to using Environment Files or opt into unsecure command execution by setting the `ACTIONS_ALLOW_UNSECURE_COMMANDS` environment variable to `true`. For more information see: https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
+
+```
 ## 06-59 - Creating a PHP Script for Sending a Slack Message
 
 qa
